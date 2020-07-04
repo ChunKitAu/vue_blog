@@ -26,9 +26,9 @@
 </template>
 
 <script>
-    import Banner from '@/components/pre/banner'
-    import sectionTitle from '@/components/pre/section-title'
-    import AriticleList from'@/components/pre/article_list'
+    import Banner from '@/components/banner'
+    import sectionTitle from '@/components/section-title'
+    import AriticleList from'@/components/article_list'
 
     export default {
         name: 'Category',
@@ -142,9 +142,11 @@
             if(this.tag_Id){
                 this.getTagList();
                 this.getTagName();
+                document.title = '标签：'+this.tagName
             }else if(this.category){
                 this.getCategoryList();
                 this.getCategoryName();
+                document.title = '分类：'+this.categoryName
             }
         }
     }

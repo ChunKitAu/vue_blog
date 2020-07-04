@@ -20,8 +20,8 @@
 </template>
 
 <script>
-    import Banner from '@/components/pre/banner'
-    import AriticleList from'@/components/pre/article_list'
+    import Banner from '@/components/banner'
+    import AriticleList from'@/components/article_list'
     export default {
         name: 'Home',
         data() {

@@ -90,8 +90,8 @@
 </template>
 
 <script>
-    import Banner from '@/components/pre/banner'
-    import sectionTitle from '@/components/pre/section-title'
+    import Banner from '@/components/banner'
+    import sectionTitle from '@/components/section-title'
 
     import SideCatalog from "vue-side-catalog";
     import "vue-side-catalog/lib/vue-side-catalog.css";
@@ -143,7 +143,8 @@
             }
         },
         created() {
-            this.getAticle()
+            this.getAticle();
+            document.title = this.blog.name
         }
     }
 </script>

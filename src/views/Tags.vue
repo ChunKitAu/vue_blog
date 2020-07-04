@@ -12,8 +12,8 @@
 </template>
 
 <script>
-    import Banner from '@/components/pre/banner'
-    import Tag from '@/components/pre/tag'
+    import Banner from '@/components/banner'
+    import Tag from '@/components/tag'
     export default {
         name: "Tags",
         components:{
