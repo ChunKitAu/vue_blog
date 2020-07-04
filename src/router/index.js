@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -8,16 +8,33 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import('../views/Home.vue'),
+    meta: { title: '首页'}
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/article/:id',
+    name: 'Article',
+    component: () => import('../views/Article.vue'),
+    meta: { title: '文章'}
+  },
+    {
+      path: '/category/:cate',
+      name: 'Category',
+      component: () => import('../views/Category.vue'),
+      meta: { title: '分类', params: 'cate'}
+    },
+    {
+      path: '/tags',
+      name: 'tags',
+      component: () => import('../views/Tags.vue'),
+      meta: { title: '分类'}
+    },
+    {
+      path: '/tag/:tagId',
+      name: 'Tag',
+      component: () => import('../views/Category.vue'),
+      meta: { title: '标签', params: 'tagId'}
+    },
 ]
 
 const router = new VueRouter({
@@ -25,5 +42,21 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+router.beforeEach((to, from, next) => {
+  let title = 'MyBlog'
+  if (to.meta.params){
+    title = `${to.meta.title}:${to.params[to.meta.params] || ''} - ${title}`
+  }else {
+    title = `${to.meta.title} - ${title}`
+  }
+  document.title = title
+  store.dispatch('setLoading', true);
+  next();
+})
+router.afterEach((to, from) => {
+  // 最多延迟 关闭 loading
+  setTimeout(() => {
+    store.dispatch('setLoading', false);
+  }, 1500)
+})
 export default router

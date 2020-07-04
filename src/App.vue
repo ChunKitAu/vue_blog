@@ -1,32 +1,30 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app" v-cloak>
+        <loading></loading>
+        <layout-header></layout-header>
+        <layout-body></layout-body>
+        <layout-footer></layout-footer>
     </div>
-    <router-view/>
-  </div>
 </template>
+<script>
+    import loading from "./components/pre/loading";
+    import layoutHeader from '@/components/pre/layout/layout-header.vue'
+    import layoutBody from '@/components/pre/layout/layout-body'
+    import layoutFooter from '@/components/pre/layout/layout-footer'
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    export default {
+        name: "app",
+        components: {
+            layoutHeader,
+            layoutBody,
+            layoutFooter,
+            loading
+        }
+    }
+</script>
+<style lang="less">
+    #app {
+        font-size: 17px;
+        color: #6f6f6f;
+    }
 </style>
