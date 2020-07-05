@@ -1,6 +1,6 @@
 <template>
         <span v-bind:style="randomRgb(tag.id)">
-            <router-link :to="`/tag/${tag.id}`">{{tag.name}}({{tag.num}})</router-link>
+            <router-link :to="`/tag/${tag.id}`"><i class="iconfont icon-biaoqian"></i>  {{tag.name}}({{tag.num}})</router-link>
         </span>
 </template>
 

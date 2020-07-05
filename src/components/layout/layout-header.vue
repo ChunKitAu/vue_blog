@@ -8,15 +8,16 @@
         </div>
         <div class="site-menus">
 <!--            <div class="menu-item header-search"><header-search/></div>-->
-            <div class="menu-item"><router-link to="/">首页</router-link></div>
+            <div class="menu-item"><router-link to="/"><i class="iconfont icon-fort-awesome"></i> 首页</router-link></div>
             <div class="menu-item hasChild">
-                <a href="#">分类</a>
+                <a href="#"><i class="iconfont icon-caidan2"></i>分类</a>
                 <div class="childMenu" v-if="category.length">
                     <div class="sub-menu" v-for="item in category" :key="item.name"><router-link :to="`/category/${item.id}`">{{item.name}}</router-link></div>
                 </div>
             </div>
-            <div class="menu-item"><router-link to="/tags">标签墙</router-link></div>
-            <div class="menu-item"><router-link to="/about">关于</router-link></div>
+            <div class="menu-item"><router-link to="/tags"><i class="iconfont icon-biaoqian1"></i>标签墙</router-link></div>
+            <div class="menu-item"><router-link to="/about"><i class="iconfont icon-biaoqian2"></i>关于</router-link></div>
+            <div class="menu-item"><router-link to="/"><i class="iconfont icon-user"></i></router-link></div>
         </div>
     </div>
 </template>

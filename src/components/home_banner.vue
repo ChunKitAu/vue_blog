@@ -26,16 +26,28 @@
                     </div>
 
                 </div>
+
+                <div class="waveWrapper waveAnimation">
+                    <div class="waveWrapperInner bgTop">
+                        <div class="wave waveTop"></div>
+                    </div>
+                    <div class="waveWrapperInner bgMiddle">
+                        <div class="wave waveMiddle"></div>
+                    </div>
+                    <div class="waveWrapperInner bgBottom">
+                        <div class="wave waveBottom"></div>
+                    </div>
+                </div>
+
                 <!--左右倾斜-->
-                <div class="slant-left"></div>
-                <div class="slant-right"></div>
+                <!--                <div class="slant-left"></div>-->
+                <!--                <div class="slant-right"></div>-->
             </template>
         </div>
     </div>
 </template>
 
 <script>
-
     export default {
         name: "banner",
         data() {
@@ -52,14 +64,14 @@
                     {
                         color: "#1AB6FF ",
                         href: "http://wpa.qq.com/msgrd?v=3&uin=570137511&site=qq&menu=yes",
-                        icon: "iconqq",
+                        icon: "icon-QQ",
                         id: 1,
                         title: "QQ",
                     },
                     {
                         color: "black",
                         href: "https://github.com/ChunKitAu",
-                        icon: "icongithub",
+                        icon: "icon-github",
                         id: 2,
                         title: "GitHub"
                     },
@@ -98,6 +110,7 @@
         margin-top: 70px;
         width: 100%;
         height: 600px !important;
+
         .banner-img {
             width: inherit;
             height: 600px;
@@ -165,7 +178,7 @@
         }
     }
 
-    .header-name{
+    .header-name {
         font-family: Ubuntu, sans-serif;
         position: relative;
         color: rgb(255, 255, 255);
@@ -175,7 +188,8 @@
         font-weight: bold;
         margin: auto;
     }
-    .header-tou{
+
+    .header-tou {
         font-size: 100%;
         vertical-align: baseline;
         margin: 0px;
@@ -184,7 +198,8 @@
         border-style: initial;
         border-color: initial;
         border-image: initial;
-        img{
+
+        img {
             box-shadow: rgb(0, 0, 0) 0px 0px 10px inset;
             opacity: 1;
             transform: rotate(0deg);
@@ -198,6 +213,7 @@
             -moz-transition: All 0.4s ease-in-out;
             -o-transition: All 0.4s ease-in-out;
         }
+
         img:hover {
             transform: rotate(360deg);
             -webkit-transform: rotate(360deg);
@@ -230,7 +246,8 @@
             background: rgba(0, 0, 0, 0.5);
             padding: 15px;
             border-radius: 10px;
-            p{
+
+            p {
                 font-family: Ubuntu, sans-serif;
                 font-weight: 700;
                 margin: 0px;
@@ -242,6 +259,7 @@
             margin-bottom: -10px;
             display: inline-block;
             list-style: none;
+
             div {
                 float: left;
                 margin-right: 10px;
@@ -253,6 +271,7 @@
             }
         }
     }
+
     @media (max-width: 960px) {
         #banner {
             height: 400px;
@@ -264,4 +283,99 @@
             display: none;
         }
     }
+
+    //波浪效果
+    @keyframes move_wave {
+        0% {
+            transform: translateX(0) translateZ(0) scaleY(1)
+        }
+        50% {
+            transform: translateX(-25%) translateZ(0) scaleY(0.55)
+        }
+        100% {
+            transform: translateX(-50%) translateZ(0) scaleY(1)
+        }
+    }
+
+    .waveWrapper {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+    }
+
+    .waveWrapperInner {
+        position: absolute;
+        width: 100%;
+        overflow: hidden;
+        height: 100%;
+        bottom: -1px;
+    }
+
+    .bgTop {
+        z-index: 15;
+        opacity: 0.5;
+    }
+
+    .bgMiddle {
+        z-index: 10;
+        opacity: 0.75;
+    }
+
+    .bgBottom {
+        z-index: 5;
+    }
+
+    .wave {
+        position: absolute;
+        left: 0;
+        width: 200%;
+        height: 100%;
+        background-repeat: repeat no-repeat;
+        background-position: 0 bottom;
+        transform-origin: center bottom;
+    }
+
+    .waveTop {
+        background-size: 50% 100px;
+    }
+
+    .waveAnimation .waveTop {
+        animation: move-wave 3s;
+        -webkit-animation: move-wave 3s;
+        -webkit-animation-delay: 1s;
+        animation-delay: 1s;
+    }
+
+    .waveMiddle {
+        background-size: 50% 120px;
+    }
+
+    .waveAnimation .waveMiddle {
+        animation: move_wave 10s linear infinite;
+    }
+
+    .waveBottom {
+        background-size: 50% 100px;
+    }
+
+    .waveAnimation .waveBottom {
+        animation: move_wave 15s linear infinite;
+    }
+
+    .waveTop {
+        background-image: url('../assets/wave.png');
+    }
+
+    .waveMiddle {
+        background-image: url('../assets/wave.png');
+    }
+
+    .waveBottom {
+        background-image: url('../assets/wave.png');
+    }
+
 </style>

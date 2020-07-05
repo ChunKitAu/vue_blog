@@ -15,17 +15,17 @@
             <p class="summary">{{post.summary}}</p>
             <footer class="entry-footer">
                 <div class="post-more">
-                    <router-link :to="`/article/${post.id}`"><i class="iconfont iconfish-li" style="font-size: 25px;"></i></router-link>
+                    <router-link :to="`/article/${post.id}`"><i class="iconfont icon-999caidan-gengduo" style="font-size: 25px;"></i></router-link>
                 </div>
                 <div class="info-meta">
                     <div class="comnum">
                         <span>
-                            <i class="iconfont iconcomment"></i>
+                            <i class="iconfont icon-pinglun"></i>
                             <a href="https://zhebk.cn/Web/Akina.html">{{post.comments}} 条评论</a>
                         </span>
                     </div>
                     <div class="views">
-                        <span><i class="iconfont iconeyes"></i>{{post.views}} 热度</span>
+                        <span><i class="iconfont icon-eye"></i>{{post.views}} 热度</span>
                     </div>
                 </div>
             </footer>
@@ -120,10 +120,9 @@
             .post-more {
                 margin-top: 10px;
                 text-align: right;
-                color: #A0DAD0;
 
                 a:hover {
-                    color: #737373;
+                    color: #A0DAD0;
                 }
             }
 

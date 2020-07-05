@@ -114,7 +114,8 @@
                 _this.$axios.get("/article/list",{params:{ page:_this.currPage,size:10}}).then(
                     function (response) {
                         response.data.data.forEach((item,index)=>{
-                            _this.ariticleList.push(item)
+                            _this.ariticleList
+                                .push(item)
                         })
                         if(_this.currPage < response.data.data[0].totalPgae)
                             _this.hasNextPage = true
