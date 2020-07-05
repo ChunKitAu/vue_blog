@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="entry-content" v-highlight>
-        <div id="blog_content" v-html="vhtml"></div>
+        <div id="blog_content" v-html="blog"></div>
         <side-catalog class="catalog" v-bind="catalogProps"></side-catalog>
     </div>
 </template>
@@ -15,7 +15,7 @@
         },
         data() {
             return {
-                vhtml: "",
+                blog:String,
                 catalogProps: {
                     container: "#blog_content",
                     watch: true,
@@ -25,25 +25,14 @@
                 }
             };
         },
+        props:{
+            vhtml: String,
+        },
         mounted() {
             var that = this;
             setTimeout(() => {
-                const blogId = this.$route.params.id
-                that.$axios.get("/article/"+blogId).then(
-                    function (response) {
-                        //markdown渲染
-                        var MarkdownIt = require("markdown-it")
-                        var md = new MarkdownIt()
-                        var content = md.render(response.data.data.content)
-                        console.log(content)
-                        that.vhtml = content
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
-
-            }, 2000);
+                that.blog = that.vhtml
+            },1000)
         }
     };
 </script>

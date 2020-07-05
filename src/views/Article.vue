@@ -27,7 +27,7 @@
 <!--                        <side-catalog class="catalog" v-bind="catalogProps"></side-catalog>-->
 <!--                    </div>-->
 
-                    <ArticleContent ></ArticleContent>
+                    <ArticleContent :vhtml="blog.content"></ArticleContent>
 
                     <!-- 文章底部 -->
                     <section-title>
