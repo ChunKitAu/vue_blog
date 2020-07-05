@@ -2,31 +2,7 @@
     <div id="banner" class="home-banner">
         <div class="banner-img" :style="{'background-image': `url(${imgUrl})`}">
             <template>
-                <br>
-                <!--博主信息-->
-                <div class="focusinfo">
-                    <!-- 头像 -->
-                    <div class="header-tou">
-                        <img :src="websiteInfo.avatar">
-                    </div>
-                    <div class="header-name">
-                        <p>ChunKit.Au</p>
-                    </div>
-                    <!-- 简介 -->
-                    <div class="header-info">
-                        <p>{{websiteInfo.slogan}}</p>
-                        <!-- 社交信息 -->
-                        <div class="top-social">
-                            <div v-for="item in socials" :key="item.id" :title="item.title">
-                                <a :href="item.href" target="_blank" :style="{'color':item.color}">
-                                    <i class="iconfont" :class="item.icon"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+                <!-- 波浪效果-->
                 <div class="waveWrapper waveAnimation">
                     <div class="waveWrapperInner bgTop">
                         <div class="wave waveTop"></div>
@@ -38,7 +14,29 @@
                         <div class="wave waveBottom"></div>
                     </div>
                 </div>
+                <!--博主信息-->
+                <div class="focusinfo">
+                    <!-- 头像 -->
+                    <div class="header-tou">
+                        <img :src="websiteInfo.avatar">
+                    </div>
+                    <div class="header-name">
+                        <p>ChunKit.Au</p>
+                    </div>
+                    <!-- 简介 -->
+                    <div class="header-info">
+                        <p><i class="iconfont icon-baojiaquotation2"></i>{{websiteInfo.slogan}} <i class="iconfont icon-baojiaquotation"></i></p>
+                        <!-- 社交信息 -->
+                        <div class="top-social">
+                            <div v-for="item in socials" :key="item.id" :title="item.title">
+                                <a :href="item.href" target="_blank" :style="{'color':item.color}">
+                                    <i class="iconfont" :class="item.icon"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
                 <!--左右倾斜-->
                 <!--                <div class="slant-left"></div>-->
                 <!--                <div class="slant-right"></div>-->
@@ -132,7 +130,7 @@
             height: 600px;
             background-attachment: fixed;
             background-size: cover;
-            z-index: 1;
+            z-index: 50;
             margin: 0px;
             padding: 0px;
             background-position: center top;
@@ -227,12 +225,12 @@
         position: relative;
         max-width: 800px;
         padding: 0 10px;
-        top: 350px;
+        top: 300px;
         left: 50%;
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
         text-align: center;
-
+        z-index: 50;
         .header-info {
             position: relative;
             width: 63%;
@@ -316,17 +314,17 @@
     }
 
     .bgTop {
-        z-index: 15;
+        z-index: 15 !important;
         opacity: 0.5;
     }
 
     .bgMiddle {
-        z-index: 10;
+        z-index: 10 !important;
         opacity: 0.75;
     }
 
     .bgBottom {
-        z-index: 5;
+        z-index: 5 !important;
     }
 
     .wave {

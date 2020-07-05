@@ -78,10 +78,9 @@
 
 <style scoped lang="less">
     #layout-header {
-
         position: fixed;
         top: 0;
-        z-index: 9;
+        z-index: 99;
         width: 100%;
         height: 70px;
         padding: 0 80px;
