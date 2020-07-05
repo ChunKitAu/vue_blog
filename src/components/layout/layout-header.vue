@@ -1,6 +1,6 @@
 <template>
     <div id="layout-header" :class="{'fixed':fixed,'hidden':hidden,'top':top}">
-        <div class="site-logo">
+        <div>
             <router-link to="/">
 <!--                <img src="@/assets/site-logo.svg" alt="">-->
                 <p class="site-name">ChunKit</p>
@@ -100,7 +100,6 @@
         }
 
         &.top{
-            opacity: 0.3 ;
             box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
         }
         &.hidden{

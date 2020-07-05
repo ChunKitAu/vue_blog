@@ -1,6 +1,6 @@
 <template>
     <div class="home" >
-        <Banner isHome="true"></Banner>
+        <HomeBanner></HomeBanner>
         <div class="site-content animate">
             <!--文章列表-->
             <main class="site-main" >
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import Banner from '@/components/banner'
+    import HomeBanner from '@/components/home_banner.vue'
     import AriticleList from'@/components/article_list'
     export default {
         name: 'Home',
@@ -32,7 +32,7 @@
             }
         },
         components: {
-            Banner,
+            HomeBanner,
             AriticleList
         },
         methods: {
