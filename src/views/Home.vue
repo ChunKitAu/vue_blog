@@ -66,7 +66,9 @@
                     }
                 }).then(
                     function (response) {
-                        _this.postList.push({post: response.data.data})
+                        response.data.data.forEach((item,index)=>{
+                            _this.ArticleList.push(item)
+                        })
                         if (_this.currPage < response.data.data[0].totalPgae)
                             _this.hasNextPage = true
                         else
