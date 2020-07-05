@@ -52,9 +52,8 @@
         },
         methods: {
             //获取当前分类的信息
-            getCategoryName(){
+            getCategoryName(categoryId){
                 var _this = this;
-                const categoryId = this.$route.params.cate
                 _this.$axios.get("/type/"+categoryId).then(
                     function (response) {
                         _this.categoryName = response.data.data.name
@@ -65,10 +64,9 @@
                 )
             },
             //获取当前分类的所有文章
-            getCategoryList() {
+            getCategoryList(categoryId) {
                 var _this = this;
-                const cateId = this.$route.params.cate
-                _this.$axios.get("/article/type/list/"+cateId,{params:{ page:_this.currPage,size:10}}).then(
+                _this.$axios.get("/article/type/list/"+categoryId,{params:{ page:_this.currPage,size:10}}).then(
                     function (response) {
                         _this.ariticleList = response.data.data
                         if(_this.currPage < response.data.data[0].totalPgae)
@@ -82,9 +80,8 @@
                 )
             },
             //获取当前标签的信息
-            getTagName(){
+            getTagName(tagId){
                 var _this = this;
-                const tagId = this.$route.params.tagId
                 _this.$axios.get("/tag/"+tagId).then(
                     function (response) {
                         _this.tagName = response.data.data.name
@@ -95,9 +92,8 @@
                 )
             },
             //获取当前标签的所有文章
-            getTagList(){
+            getTagList(tagId){
                 var _this = this;
-                const tagId = this.$route.params.tagId
                 _this.$axios.get("/article/tag/list/"+tagId,{params:{ page:_this.currPage,size:10}}).then(
                     function (response) {
                         _this.ariticleList = response.data.data
@@ -117,7 +113,9 @@
                 _this.currPage = _this.currPage + 1
                 _this.$axios.get("/article/list",{params:{ page:_this.currPage,size:10}}).then(
                     function (response) {
-                        _this.postList.push({post:response.data.data})
+                        response.data.data.forEach((item,index)=>{
+                            _this.ariticleList.push(item)
+                        })
                         if(_this.currPage < response.data.data[0].totalPgae)
                             _this.hasNextPage = true
                         else
@@ -132,21 +130,40 @@
         mounted() {
             var _this = this;
             if(_this.tag_Id){
-                _this.getTagList();
-                _this.getTagName();
+                _this.getTagList(this.$route.params.tagId);
+                _this.getTagName(this.$route.params.tagId);
                 setTimeout(() => {
                     document.title = '标签：'+_this.tagName
                     _this.toBannerMessage = '标签：'+_this.tagName+'-相关文章'
                 },300)
-
             }else if(_this.category){
-                _this.getCategoryList();
-                _this.getCategoryName();
+                _this.getCategoryList(this.$route.params.cate);
+                _this.getCategoryName(this.$route.params.cate);
                 setTimeout(() => {
                     document.title = '分类：'+_this.categoryName
                     _this.toBannerMessage = '分类：'+_this.categoryName+'-相关文章'
                 },300)
-
+            }
+        },
+        watch:{
+            //监听相同路由下参数变化的时候，从而实现异步刷新
+            "$route": function(){
+                var _this = this;
+                if(_this.tag_Id){
+                    _this.getTagList();
+                    _this.getTagName();
+                    setTimeout(() => {
+                        document.title = '标签：'+_this.tagName
+                        _this.toBannerMessage = '标签：'+_this.tagName+'-相关文章'
+                    },300)
+                }else if(_this.category){
+                    _this.getCategoryList();
+                    _this.getCategoryName();
+                    setTimeout(() => {
+                        document.title = '分类：'+_this.categoryName
+                        _this.toBannerMessage = '分类：'+_this.categoryName+'-相关文章'
+                    },300)
+                }
             }
         }
     }
