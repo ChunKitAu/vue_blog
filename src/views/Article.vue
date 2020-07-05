@@ -22,10 +22,12 @@
                     </header>
 
                     <!-- 正文输出 -->
-                    <div id="codeView" class="entry-content" v-highlight >
-                        <div id="blog_content" v-html="blog.content">{{blog.content}}</div>
-                        <side-catalog class="catalog" v-bind="catalogProps"></side-catalog>
-                    </div>
+<!--                    <div id="codeView" class="entry-content" v-highlight >-->
+<!--                        <div id="blog_content" v-html="blog.content"></div>-->
+<!--                        <side-catalog class="catalog" v-bind="catalogProps"></side-catalog>-->
+<!--                    </div>-->
+
+                    <ArticleContent ></ArticleContent>
 
                     <!-- 文章底部 -->
                     <section-title>
@@ -92,20 +94,12 @@
 <script>
     import Banner from '@/components/banner'
     import sectionTitle from '@/components/section-title'
-
-    import SideCatalog from "vue-side-catalog";
-    import "vue-side-catalog/lib/vue-side-catalog.css";
+    import ArticleContent from   '@/components/article_content'
 
     export default {
         name: 'articles',
         data(){
             return{
-                catalogProps: {
-                    container: "#blog_content",
-                    height: "calc(100% - 100px)",
-                    title: "Contents",
-                    levelList: ["h1", "h2", "h3", "h4", "h5"],
-                },
                 id:"",
                 showDonate: false,
                 blog:"",
@@ -116,7 +110,7 @@
         components: {
             Banner,
             sectionTitle,
-            SideCatalog,
+            ArticleContent,
         },
         methods: {
             //获取文章
@@ -142,21 +136,13 @@
             getComment(){
             }
         },
-        created() {
+        mounted() {
             this.getAticle();
             document.title = this.blog.name
         }
     }
 </script>
 <style scoped lang="less">
-
-    .catalog {
-        position: fixed;
-        top: 300px;
-        right: 100px;
-    }
-
-
     .site-content {
         .site-main {
             padding: 80px 0 0 0;
