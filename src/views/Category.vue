@@ -19,7 +19,6 @@
 
 <script>
     import Banner from '@/components/banner'
-    import sectionTitle from '@/components/section-title'
     import AriticleList from'@/components/article_list'
 
     export default {
@@ -38,7 +37,6 @@
         },
         components: {
             Banner,
-            sectionTitle,
             AriticleList,
         },
         computed: {
