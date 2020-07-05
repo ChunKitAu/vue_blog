@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="home" >
         <Banner isHome="true"></Banner>
         <div class="site-content animate">
             <!--文章列表-->
@@ -87,28 +87,6 @@
 </script>
 
 <style scoped lang="less">
-
-    .site-content {
-        .notify {
-            margin: 60px 0;
-            border-radius: 3px;
-
-            & > div {
-                padding: 20px;
-            }
-        }
-
-
-        .search-result {
-            padding: 15px 20px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 400;
-            border: 1px dashed #ddd;
-            color: #828282;
-        }
-    }
-
     .top-feature {
         width: 100%;
         height: auto;
@@ -165,16 +143,6 @@
             padding-top: 40px;
         }
 
-        .site-content {
-            .notify {
-                margin: 30px 0 0 0;
-            }
-
-            .search-result {
-                margin-bottom: 20px;
-                font-size: 16px;
-            }
-        }
     }
 
     /******/

@@ -22,14 +22,18 @@
                 <div class="slant-right"></div>
             </template>
             <template v-if="isTags">
-                <!--博主信息-->
+                    <div class="pattern-header">
+                        <h1>标签墙</h1>
+                    </div>
+            </template>
+            <template v-if="message">
                 <div class="focusinfo">
-                    <!-- 简介 -->
-                    <div class="header-info">
-                        <p>标签墙</p>
+                    <div class="pattern-header">
+                        <h1>{{message}}</h1>
                     </div>
                 </div>
             </template>
+
         </div>
     </div>
 </template>
@@ -78,6 +82,10 @@
             isTags:{
                 type: [Boolean,String],
                 default: false
+            },
+            message:{
+                type: [String],
+                default: ''
             }
         },
         created(){
@@ -115,12 +123,22 @@
             transition: all 0.2s linear;
             overflow: hidden;
             &:hover {
-                transform: scale(1.1, 1.1);
-                filter: contrast(130%);
+                //变大
+                /*transform: scale(1.1, 1.1);*/
+                /*filter: contrast(130%);*/
             }
         }
         &.home-banner {
+            width: 100%;
             height: 400px;
+            background-attachment: fixed;
+            background-size: cover;
+            z-index: -1;
+            margin: 0px;
+            padding: 0px;
+            background-position: center top;
+            background-repeat: no-repeat;
+
             .banner-img{
                 background-position: center center;
                 background-repeat: no-repeat;
@@ -202,6 +220,18 @@
             }
         }
     }
+    .pattern-header{
+        position: absolute;
+        top: 45%;
+        left: 0px;
+        right: 0px;
+        text-align: center;
+        color: rgb(255, 255, 255);
+        z-index: 1;
+        font-size: 70px;
+    }
+
+
     @media (max-width: 960px){
         #banner {height: 400px;}
     }

@@ -22,11 +22,6 @@
                     </header>
 
                     <!-- 正文输出 -->
-<!--                    <div id="codeView" class="entry-content" v-highlight >-->
-<!--                        <div id="blog_content" v-html="blog.content"></div>-->
-<!--                        <side-catalog class="catalog" v-bind="catalogProps"></side-catalog>-->
-<!--                    </div>-->
-
                     <ArticleContent :vhtml="blog.content"></ArticleContent>
 
                     <!-- 文章底部 -->
@@ -137,8 +132,12 @@
             }
         },
         mounted() {
+            var _this = this;
             this.getAticle();
-            document.title = this.blog.name
+            setTimeout(() => {
+                document.title = this.blog.title
+            },300)
+
         }
     }
 </script>

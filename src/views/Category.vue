@@ -1,15 +1,7 @@
 <template>
     <div class="home">
-        <banner isHome="true"></banner>
+        <banner :message="toBannerMessage"></banner>
         <div class="site-content animate">
-            <!--通知栏-->
-            <div class="notify">
-                <div class="search-result" >
-                    <span v-if="searchWords">搜索结果："{{searchWords}}" 相关文章</span>
-                    <span v-else-if="category">分类 "{{categoryName}}" 相关文章</span>
-                    <span v-else-if="tag_Id">标签 "{{tagName}}" 相关文章</span>
-                </div>
-            </div>
             <!--文章列表-->
             <main class="site-main" >
                 <template v-for="item in ariticleList">
@@ -35,6 +27,7 @@
         props: ['cate', 'words','tagId'],
         data() {
             return {
+                toBannerMessage:'',
                 categoryName:'',
                 tagName:'',
                 features: [],
@@ -139,40 +132,28 @@
             }
         },
         mounted() {
-            if(this.tag_Id){
-                this.getTagList();
-                this.getTagName();
-                document.title = '标签：'+this.tagName
-            }else if(this.category){
-                this.getCategoryList();
-                this.getCategoryName();
-                document.title = '分类：'+this.categoryName
+            var _this = this;
+            if(_this.tag_Id){
+                _this.getTagList();
+                _this.getTagName();
+                setTimeout(() => {
+                    document.title = '标签：'+_this.tagName
+                    _this.toBannerMessage = '标签：'+_this.tagName+'-相关文章'
+                },300)
+
+            }else if(_this.category){
+                _this.getCategoryList();
+                _this.getCategoryName();
+                setTimeout(() => {
+                    document.title = '分类：'+_this.categoryName
+                    _this.toBannerMessage = '分类：'+_this.categoryName+'-相关文章'
+                },300)
+
             }
         }
     }
 </script>
 <style scoped lang="less">
-
-    .site-content {
-        .notify {
-            margin: 60px 0;
-            border-radius: 3px;
-            & > div {
-                padding: 20px;
-            }
-        }
-
-
-        .search-result {
-            padding: 15px 20px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 400;
-            border: 1px dashed #ddd;
-            color: #828282;
-        }
-    }
-
     .top-feature {
         width: 100%;
         height: auto;
@@ -227,16 +208,6 @@
             padding-top: 40px;
         }
 
-        .site-content {
-            .notify {
-                margin: 30px 0 0 0;
-            }
-
-            .search-result {
-                margin-bottom: 20px;
-                font-size: 16px;
-            }
-        }
     }
 
     /******/

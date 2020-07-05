@@ -1,9 +1,9 @@
 <template>
-    <div id="layout-header" :class="{'fixed':fixed,'hidden':hidden}">
+    <div id="layout-header" :class="{'fixed':fixed,'hidden':hidden,'top':top}">
         <div class="site-logo">
             <router-link to="/">
 <!--                <img src="@/assets/site-logo.svg" alt="">-->
-                <p class="site-name">Gblog</p>
+                <p class="site-name">ChunKit</p>
             </router-link>
         </div>
         <div class="site-menus">
@@ -32,6 +32,7 @@
                 lastScrollTop: 0,
                 fixed: false,
                 hidden: false,
+                top:false,
                 category: []
             }
         },
@@ -45,14 +46,17 @@
         methods: {
             watchScroll() {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-                if (scrollTop===0){
+                if (scrollTop === 0){
+                    this.top = true;
                     this.fixed = false;
                 } else if (scrollTop>=this.lastScrollTop){
                     this.fixed = false;
                     this.hidden = true;
+                    this.top = false;
                 } else {
                     this.fixed = true
                     this.hidden = false
+                    this.top = false;
                 }
                 this.lastScrollTop = scrollTop
             },
@@ -73,11 +77,12 @@
 
 <style scoped lang="less">
     #layout-header {
+
         position: fixed;
         top: 0;
         z-index: 9;
         width: 100%;
-        height: 80px;
+        height: 70px;
         padding: 0 80px;
         display: flex;
         justify-content: space-between;
@@ -87,8 +92,21 @@
         -moz-transition: .3s all linear;
         -o-transition: .3s all ease;
         -ms-transition: .3s all ease;
+
+        &:hover {
+            background-color: #ffffff;
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+            opacity: 0.9 !important;
+        }
+
+        &.top{
+            opacity: 0.3 ;
+            box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+        }
         &.hidden{
-            top: -100px;
+            background-color: #FFFFFF;
+            opacity: 0.9;
+            /*top: -100px;*/
         }
         &.fixed{
             background-color: #FFFFFF;
@@ -138,7 +156,10 @@
                 font-weight: 500;
                 font-size: 16px;
                 &:hover {
-                    color: #ff6d6d;
+                    color: rgb(254, 150, 0);
+                    border-bottom: solid;
+                    border-bottom-width: 4px;
+                    border-bottom-color: rgb(254, 150, 0);
                 }
             }
             &:not(:last-child) {
