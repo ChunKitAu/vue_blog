@@ -43,7 +43,7 @@
 <style scoped lang="less">
     #banner {
         .pattern-center-blank{
-            padding-top: 75px;
+            padding-top: 70px;
             background-color: #fff;
         }
         @media(max-width:768px){

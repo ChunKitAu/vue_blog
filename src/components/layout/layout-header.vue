@@ -48,6 +48,7 @@
             window.addEventListener('scroll', this.watchScroll)
             this.getCategorys()
 
+            //监听打开侧边菜单  点击其它div消失
             document.addEventListener('click',ev => {
                 let thisClassName = ev.target.className;
                 if(thisClassName != "iconfont icon-caidan2" ){
@@ -103,7 +104,7 @@
         top: 0;
         z-index: 99;
         width: 100%;
-        height: 70px;
+        height: 70px !important;
         padding: 0 80px;
         display: inline;
         justify-content: space-between;
