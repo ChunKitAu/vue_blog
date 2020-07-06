@@ -63,17 +63,18 @@
         position: relative;
         max-width: 800px;
         padding: 0 10px;
-        top: 40%;
+        top: 49.3%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%,-50%);
         text-align: center;
         z-index: 99;
-        img {
-            width: 100px;
-            height: auto;
-            border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+        -webkit-transition: .4s ease all;
+        -moz-transition: .4s ease all;
+        -o-transition: .4s ease all;
+        transition: .4s ease all;
+        @media (max-width: 768px){
+            display: none;
         }
 
     }

@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12025569",
+      "name": "chevron_down",
+      "font_class": "chevron_down",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
       "icon_id": "380321",
       "name": "anchor",
       "font_class": "anchor",
@@ -15,7 +22,7 @@
     {
       "icon_id": "1308956",
       "name": "999菜单-更多",
-      "font_class": "999caidan-gengduo",
+      "font_class": "caidan-gengduo",
       "unicode": "e680",
       "unicode_decimal": 59008
     },

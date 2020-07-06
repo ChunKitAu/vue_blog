@@ -3,7 +3,7 @@
         <HomeBanner></HomeBanner>
         <div class="site-content animate">
             <!--文章列表-->
-            <main class="site-main" >
+            <main class="site-main" id="blog_list">
                 <!--      <section-title v-if="!hideSlogan">推荐</section-title>-->
                 <template v-for="item in ArticleList">
                     <AriticleList :post="item" :key="item.id"></AriticleList>

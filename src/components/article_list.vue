@@ -15,7 +15,7 @@
             <p class="summary">{{post.summary}}</p>
             <footer class="entry-footer">
                 <div class="post-more">
-                    <router-link :to="`/article/${post.id}`"><i class="iconfont icon-999caidan-gengduo" style="font-size: 25px;"></i></router-link>
+                    <router-link :to="`/article/${post.id}`"><i class="iconfont icon-caidan-gengduo" style="font-size: 25px;"></i></router-link>
                 </div>
                 <div class="info-meta">
                     <div class="comnum">

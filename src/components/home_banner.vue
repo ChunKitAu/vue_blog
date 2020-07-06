@@ -14,18 +14,22 @@
                         <div class="wave waveBottom"></div>
                     </div>
                 </div>
+
+                <div class="headertop-down animated">
+                    <span @click="headertop_down"><i class="iconfont icon-chevron_down"></i></span>
+                </div>
+
                 <!--博主信息-->
                 <div class="focusinfo">
                     <!-- 头像 -->
                     <div class="header-tou">
                         <img :src="websiteInfo.avatar">
                     </div>
-                    <div class="header-name">
-                        <p>ChunKit.Au</p>
-                    </div>
+                    <h1 class="glitch">ChunKit.Au</h1>
                     <!-- 简介 -->
                     <div class="header-info">
-                        <p><i class="iconfont icon-baojiaquotation2"></i>{{websiteInfo.slogan}} <i class="iconfont icon-baojiaquotation"></i></p>
+                        <p><i class="iconfont icon-baojiaquotation2"></i>{{websiteInfo.slogan}} <i
+                                class="iconfont icon-baojiaquotation"></i></p>
                         <!-- 社交信息 -->
                         <div class="top-social">
                             <div v-for="item in socials" :key="item.id" :title="item.title">
@@ -35,7 +39,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!--左右倾斜-->
                 <!--                <div class="slant-left"></div>-->
@@ -86,17 +89,29 @@
 
         },
         methods: {
-            // getSocial(){
-            //     this.$store.dispatch('getSocials').then(data =>{
-            //         this.socials = data
-            //     })
-            // },
-            // getWebSiteInfo(){
-            //     this.$store.dispatch('getSiteInfo').then(data =>{
-            //         console.log(data)
-            //         this.websiteInfo = data
-            //     })
-            // }
+            //跳转到文章列表处
+            headertop_down() {
+                const content = document.getElementById('blog_list').offsetTop;
+                this.scrollAnimation(0, content);
+            },
+            //跳转
+            scrollAnimation(currentY, targetY) {
+                // 计算需要移动的距离
+                let needScrollTop = targetY - currentY;
+                let _currentY = currentY;
+                setTimeout(() => {
+                    // 一次调用滑动帧数，每次调用会不一样
+                    const dist = Math.ceil(needScrollTop / 10);
+                    _currentY += dist;
+                    window.scrollTo(_currentY, currentY);
+                    // 如果移动幅度小于十个像素，直接移动，否则递归调用，实现动画效果
+                    if (needScrollTop > 10 || needScrollTop < -10) {
+                        this.scrollAnimation(_currentY, targetY)
+                    } else {
+                        window.scrollTo(_currentY, targetY)
+                    }
+                }, 1)
+            },
         }
     }
 </script>
@@ -176,49 +191,20 @@
         }
     }
 
-    .header-name {
-        font-family: Ubuntu, sans-serif;
-        position: relative;
-        color: rgb(255, 255, 255);
-        mix-blend-mode: lighten;
-        font-size: 80px;
-        text-transform: uppercase;
-        font-weight: bold;
-        margin: auto;
-    }
-
-    .header-tou {
-        font-size: 100%;
-        vertical-align: baseline;
-        margin: 0px;
-        padding: 0px;
-        border-width: 0px;
-        border-style: initial;
-        border-color: initial;
-        border-image: initial;
-
-        img {
-            box-shadow: rgb(0, 0, 0) 0px 0px 10px inset;
+    .header-tou{
+        img{
+            box-shadow: inset 0 0 10px #000;
+            padding: 5px;
             opacity: 1;
-            transform: rotate(0deg);
+            transform: rotate(0);
+            transition: all ease 1s;
             width: 130px;
             height: 130px;
-            padding: 5px;
             border-radius: 100%;
-            //旋转360度
-            transition: all 2s ease 0s;
-            -webkit-transition: All 0.4s ease-in-out;
-            -moz-transition: All 0.4s ease-in-out;
-            -o-transition: All 0.4s ease-in-out;
         }
-
-        img:hover {
-            transform: rotate(360deg);
-            -webkit-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -o-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
-        }
+    }
+    .header-tou img:hover {
+        transform: rotate(360deg);
     }
 
     .focusinfo {
@@ -231,26 +217,6 @@
         -webkit-transform: translate(-50%, -50%);
         text-align: center;
         z-index: 50;
-        .header-info {
-            position: relative;
-            width: 63%;
-            font-size: 16px;
-            color: rgb(234, 234, 223);
-            letter-spacing: 0px;
-            line-height: 30px;
-            box-sizing: initial;
-            white-space: nowrap;
-            margin: 22px auto auto;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 10px;
-
-            p {
-                font-family: Ubuntu, sans-serif;
-                font-weight: 700;
-                margin: 0px;
-            }
-        }
 
         .top-social {
             height: 35px;
@@ -270,6 +236,44 @@
         }
     }
 
+
+    .header-info {
+        position: relative;
+        width: 63%;
+        margin: auto;
+        font-size: 16px;
+        color: #eaeadf;
+        background: rgba(0, 0, 0, .5);
+        padding: 15px;
+        margin-top: 22px;
+        letter-spacing: 0;
+        line-height: 30px;
+        border-radius: 10px;
+        box-sizing: initial;
+        white-space: nowrap;
+    }
+
+    .header-info:before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        margin-left: -15px;
+        border-width: 15px;
+        border-style: solid;
+        border-color: transparent transparent rgba(0, 0, 0, .5) transparent;
+    }
+
+    .header-info p {
+        margin: 0;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: 700;
+
+        span {
+            margin: 0 10px;
+        }
+    }
+
     @media (max-width: 960px) {
         #banner {
             height: 400px;
@@ -279,6 +283,155 @@
     @media (max-width: 800px) {
         #banner {
             display: none;
+        }
+    }
+
+    /*文字闪动效果*/
+    .glitch {
+        font-family: 'Ubuntu', sans-serif;
+        position: relative;
+        color: #fff;
+        mix-blend-mode: lighten;
+        margin: auto;
+        font-size: 80px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .glitch:before, .glitch:after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0);
+        clip: rect(0, 0, 0, 0);
+    }
+
+    .glitch:before {
+        left: -1px;
+        text-shadow: 1px 0 #ff3f1a;
+    }
+
+    .glitch:after {
+        left: 1px;
+        text-shadow: -1px 0 #00a7e0;
+    }
+
+    .glitch:hover:before {
+        text-shadow: 4px 0 #ff3f1a;
+        animation: glitch-loop-1 .8s infinite ease-in-out alternate-reverse;
+    }
+
+    .glitch:hover:after {
+        text-shadow: -5px 0 #00a7e0;
+        animation: glitch-loop-2 .8s infinite ease-in-out alternate-reverse;
+    }
+
+    @-webkit-keyframes glitch-loop-1 {
+        0% {
+            clip: rect(36px, 9999px, 9px, 0)
+        }
+
+        25% {
+            clip: rect(25px, 9999px, 99px, 0)
+        }
+
+        50% {
+            clip: rect(50px, 9999px, 102px, 0)
+        }
+
+        75% {
+            clip: rect(30px, 9999px, 92px, 0)
+        }
+
+        100% {
+            clip: rect(91px, 9999px, 98px, 0)
+        }
+    }
+
+    @keyframes glitch-loop-1 {
+        0% {
+            clip: rect(36px, 9999px, 9px, 0)
+        }
+
+        25% {
+            clip: rect(25px, 9999px, 99px, 0)
+        }
+
+        50% {
+            clip: rect(50px, 9999px, 102px, 0)
+        }
+
+        75% {
+            clip: rect(30px, 9999px, 92px, 0)
+        }
+
+        100% {
+            clip: rect(91px, 9999px, 98px, 0)
+        }
+    }
+
+    @-webkit-keyframes glitch-loop-2 {
+        0% {
+            top: -1px;
+            left: 1px;
+            clip: rect(65px, 9999px, 119px, 0)
+        }
+
+        25% {
+            top: -6px;
+            left: 4px;
+            clip: rect(79px, 9999px, 19px, 0)
+        }
+
+        50% {
+            top: -3px;
+            left: 2px;
+            clip: rect(68px, 9999px, 11px, 0)
+        }
+
+        75% {
+            top: 0;
+            left: -4px;
+            clip: rect(95px, 9999px, 53px, 0)
+        }
+
+        100% {
+            top: -1px;
+            left: -1px;
+            clip: rect(31px, 9999px, 149px, 0)
+        }
+    }
+
+    @keyframes glitch-loop-2 {
+        0% {
+            top: -1px;
+            left: 1px;
+            clip: rect(65px, 9999px, 119px, 0)
+        }
+
+        25% {
+            top: -6px;
+            left: 4px;
+            clip: rect(79px, 9999px, 19px, 0)
+        }
+
+        50% {
+            top: -3px;
+            left: 2px;
+            clip: rect(68px, 9999px, 11px, 0)
+        }
+
+        75% {
+            top: 0;
+            left: -4px;
+            clip: rect(95px, 9999px, 53px, 0)
+        }
+
+        100% {
+            top: -1px;
+            left: -1px;
+            clip: rect(31px, 9999px, 149px, 0)
         }
     }
 
@@ -365,15 +518,35 @@
     }
 
     .waveTop {
-        background-image: url('../assets/wave.png');
+        background-image: url('../assets/images/wave-top.png');
     }
 
     .waveMiddle {
-        background-image: url('../assets/wave.png');
+        background-image: url('../assets/images/wave-mid.png');
     }
 
     .waveBottom {
-        background-image: url('../assets/wave.png');
+        background-image: url('../assets/images/wave-bot.png');
+    }
+
+
+
+    //下拉
+    .headertop-down {
+        position: absolute;
+        bottom: 80px;
+        left: 50%;
+        cursor: pointer;
+        z-index: 90;
+        animation: float 2s linear infinite;
+
+        i {
+            font-size: 32px;
+            color: #fff;
+            -ms-transform: scale(1.5, 1);
+            -webkit-transform: scale(1.5, 1);
+            transform: scale(1.5, 1)
+        }
     }
 
 </style>
