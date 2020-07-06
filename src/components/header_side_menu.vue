@@ -1,7 +1,7 @@
 <template>
     <div class="sideMenu " @click.stop>
-        <div class="m-avatar"><img alt=""
-                                   src="https://cos.nosum.cn/nosum/blog/other/a51eb755-60db-49de-8a23-5320dcbf0eae.png">
+        <div class="m-avatar">
+            <img alt="" src="https://cos.nosum.cn/nosum/blog/other/a51eb755-60db-49de-8a23-5320dcbf0eae.png">
         </div>
         <p class="name ellipsis">ChunKit.Au</p>
         <p class="info ellipsis">Tomorrow may be cruel, but, I want see</p>
@@ -22,7 +22,12 @@
     export default {
         name: "home_open",
         props:{
-            category: [],
+            category: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            }
         }
     }
 </script>

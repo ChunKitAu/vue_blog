@@ -50,7 +50,6 @@
 
             document.addEventListener('click',ev => {
                 let thisClassName = ev.target.className;
-                console.log(thisClassName);
                 if(thisClassName != "iconfont icon-caidan2" ){
                     this.open = false;
                 }
