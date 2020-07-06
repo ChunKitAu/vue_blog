@@ -11,14 +11,13 @@
     import layoutHeader from '@/components/layout/layout-header.vue'
     import layoutBody from '@/components/layout/layout-body'
     import layoutFooter from '@/components/layout/layout-footer'
-
     export default {
         name: "app",
         components: {
             layoutHeader,
             layoutBody,
             layoutFooter,
-            loading
+            loading,
         }
     }
 </script>

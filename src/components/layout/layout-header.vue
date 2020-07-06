@@ -1,9 +1,14 @@
 <template>
     <div id="layout-header" :class="{'fixed':fixed,'hidden':hidden,'top':top}">
-        <div>
+        <div v-show="open" >
+            <SideMenu :category="category"></SideMenu>
+        </div>
+        <div class="site-open-nav">
+           <a> <i class="iconfont icon-caidan2" @click="changeOpen"></i></a>
+        </div>
+        <div class="site-name">
             <router-link to="/">
-<!--                <img src="@/assets/site-logo.svg" alt="">-->
-                <p class="site-name">ChunKit</p>
+                <h1>ChunKit</h1>
             </router-link>
         </div>
         <div class="site-menus">
@@ -23,13 +28,15 @@
 </template>
 
 <script>
+    import SideMenu from "../home_side_menu";
     export default {
         name: "layout-header",
         components: {
-
+            SideMenu,
         },
         data() {
             return {
+                open:false,
                 lastScrollTop: 0,
                 fixed: false,
                 hidden: false,
@@ -40,6 +47,15 @@
         mounted(){
             window.addEventListener('scroll', this.watchScroll)
             this.getCategorys()
+
+            document.addEventListener('click',ev => {
+                let thisClassName = ev.target.className;
+                console.log(thisClassName);
+                if(thisClassName != "iconfont icon-caidan2" ){
+                    this.open = false;
+                }
+            })
+
         },
         beforeDestroy () {
             window.removeEventListener("scroll", this.watchScroll)
@@ -71,6 +87,12 @@
                         console.log(error);
                     }
                 )
+            },
+
+            changeOpen(){
+                var _this = this;
+                _this.open = ! _this.open;
+                console.log(_this.open)
             }
         }
     }
@@ -84,7 +106,7 @@
         width: 100%;
         height: 70px;
         padding: 0 80px;
-        display: flex;
+        display: inline;
         justify-content: space-between;
         align-items: center;
         transition: .3s all ease;
@@ -117,32 +139,34 @@
             padding: 0 20px;
         }
     }
-    @media (max-width: 600px){
+    @media (max-width: 768px){
         #layout-header{
             padding: 0 10px;
         }
     }
 
-    .site-logo {
-        text-align: center;
-
-        img {
-            width: 60px;
-            height: 60px;
+    .site-name {
+        float:left;
+        font-size: 20px;
+        font-weight: bold;
+        position: absolute;
+        margin-top: 20px;
+        @media (max-width: 768px){
+            display: none;
         }
-
-        p.site-name {
-            font-size: 15px;
-            font-weight: bold;
-            position: relative;
-            top: -10px;
+    }
+    .site-open-nav{
+        margin-top: 20px;
+        display: none;
+        @media (max-width: 768px){
+            display: inline-block;
         }
     }
 
     .site-menus {
+        float: right;
         display: flex;
         align-items: center;
-
         .menu-item {
             min-width: 60px;
             height: 50px;
@@ -170,6 +194,11 @@
                 transform: translateY(-5px);
             }
         }
+        @media (max-width: 768px){
+            display:none;
+        }
+
+
         .childMenu{
             width: 130px;
             background-color: #FDFDFD;
