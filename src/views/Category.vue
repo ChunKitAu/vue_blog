@@ -149,20 +149,21 @@
         watch:{
             //监听相同路由下参数变化的时候，从而实现异步刷新
             "$route": function(){
+                console.log(1)
                 var _this = this;
                 if(_this.tag_Id){
-                    _this.getTagList();
-                    _this.getTagName();
+                    _this.getTagList(_this.tag_Id);
+                    _this.getTagName(_this.tag_Id);
                     setTimeout(() => {
                         document.title = '标签：'+_this.tagName
-                        _this.toBannerMessage = '标签：'+_this.tagName+'-相关文章'
+                        _this.toBannerMessage = _this.tagName
                     },300)
                 }else if(_this.category){
-                    _this.getCategoryList();
-                    _this.getCategoryName();
+                    _this.getCategoryList(_this.category);
+                    _this.getCategoryName(_this.category);
                     setTimeout(() => {
                         document.title = '分类：'+_this.categoryName
-                        _this.toBannerMessage = '分类：'+_this.categoryName+'-相关文章'
+                        _this.toBannerMessage = _this.categoryName
                     },300)
                 }
             }

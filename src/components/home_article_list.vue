@@ -16,11 +16,11 @@
 
                 <div class='post-meta'>
                         <span>
-                            <i class='iconfont icon-attention'/>
+                            <i class='iconfont icon-eye'/>
                             {{post.views}} 热度
                         </span>
                          <span class='comments-number'>
-                            <i class='iconfont icon-mark'/>
+                            <i class='iconfont icon-pinglun'/>
                             {{post.comments}}  评论
                         </span>
                 </div>
