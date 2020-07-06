@@ -1,16 +1,15 @@
 <template>
     <div class="home" >
-        <HomeBanner></HomeBanner>
+        <HomeBanner ></HomeBanner>
         <div class="site-content animate">
             <!--文章列表-->
             <main class="site-main" id="blog_list">
                 <!--      <section-title v-if="!hideSlogan">推荐</section-title>-->
-                <template v-for="item in ArticleList">
-                    <AriticleList :post="item" :key="item.id"></AriticleList>
+                <template v-for="(item,index) in ArticleList">
+                    <HoneArticleList :post="item" :index="index"></HoneArticleList>
                 </template>
             </main>
         </div>
-
         <!--加载更多-->
         <div class="more" v-show="hasNextPage">
             <div class="more-btn" @click="loadMore">More</div>
@@ -21,7 +20,7 @@
 
 <script>
     import HomeBanner from '@/components/home_banner.vue'
-    import AriticleList from'@/components/article_list'
+    import HoneArticleList  from "../components/home_article_list";
     export default {
         name: 'Home',
         data() {
@@ -33,7 +32,7 @@
         },
         components: {
             HomeBanner,
-            AriticleList
+            HoneArticleList
         },
         methods: {
             fetchList() {

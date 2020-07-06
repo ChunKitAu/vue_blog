@@ -1,6 +1,4 @@
 <template>
-
-
     <div class="BannerWrapper">
         <!-- 波浪效果-->
         <div class="waveWrapper waveAnimation">
