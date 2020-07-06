@@ -135,14 +135,14 @@
                 _this.getTagName(this.$route.params.tagId);
                 setTimeout(() => {
                     document.title = '标签：'+_this.tagName
-                    _this.toBannerMessage = '标签：'+_this.tagName+'-相关文章'
+                    _this.toBannerMessage = _this.tagName
                 },300)
             }else if(_this.category){
                 _this.getCategoryList(this.$route.params.cate);
                 _this.getCategoryName(this.$route.params.cate);
                 setTimeout(() => {
                     document.title = '分类：'+_this.categoryName
-                    _this.toBannerMessage = '分类：'+_this.categoryName+'-相关文章'
+                    _this.toBannerMessage = _this.categoryName
                 },300)
             }
         },

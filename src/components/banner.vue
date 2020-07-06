@@ -1,18 +1,21 @@
 <template>
     <div id="banner">
-        <div class="banner-img" :style="{'background-image': `url(${imgUrl})`}">
+        <div class='pattern-center-blank'/>
+        <div class="top">
+            <div class="pattern-attachment-img">
+                <img class='lazyload' src='https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture' alt=""/>
+            </div>
             <template v-if="isTags">
                 <div class="pattern-header">
                     <h1>标签墙</h1>
                 </div>
             </template>
             <template v-if="message">
-                <div class="focusinfo">
-                    <div class="pattern-header">
-                        <h1>{{message}}</h1>
-                    </div>
+                <div class="pattern-header">
+                    <h1>{{message}}</h1>
                 </div>
             </template>
+
         </div>
     </div>
 </template>
@@ -39,67 +42,84 @@
 
 <style scoped lang="less">
     #banner {
-        position: relative;
-        margin-top: 70px;
-        width: 100%;
-        height: 400px ;
-        .banner-img {
-            width: inherit;
-            height: 400px;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            transition: all 0.2s linear;
-            overflow: hidden;
-            &:hover {
-                //变大
-                /*transform: scale(1.1, 1.1);*/
-                /*filter: contrast(130%);*/
+        .pattern-center-blank{
+            padding-top: 75px;
+            background-color: #fff;
+        }
+        @media(max-width:768px){
+            .pattern-center-blank{
+                padding-top: 50px;
             }
         }
     }
 
-    .focusinfo {
+    .top{
         position: relative;
-        max-width: 800px;
-        padding: 0 10px;
-        top: 49.3%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        -webkit-transform: translate(-50%,-50%);
-        text-align: center;
-        z-index: 99;
-        -webkit-transition: .4s ease all;
-        -moz-transition: .4s ease all;
-        -o-transition: .4s ease all;
-        transition: .4s ease all;
-        @media (max-width: 768px){
-            display: none;
+        top: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        &:before{
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0,0,0,.3);
         }
-
-    }
-
-    .pattern-header {
-        position: absolute;
-        top: 45%;
-        left: 0px;
-        right: 0px;
-        text-align: center;
-        color: rgb(255, 255, 255);
-        z-index: 1;
-        font-size: 70px;
-    }
-
-
-    @media (max-width: 960px) {
-        #banner {
+        &:after{
+            content: '';
+            width: 150%;
+            height: 4.375rem;
+            background: #fff;
+            left: -25%;
+            bottom: -2.875rem;
+            border-radius: 100%;
+            position: absolute;
+        }
+        .pattern-attachment-img{
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            background-origin: border-box;
+            width: 100%;
             height: 400px;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                pointer-events: none;
+            }
         }
-    }
-
-    @media (max-width: 800px) {
-        #banner {
-            display: none;
+        .pattern-header {
+            position: absolute;
+            top: 45%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff;
+            z-index: 20;
+            h1{
+                color: #fff;
+                font-size: 40px;
+                font-weight: 500;
+                width: 80%;
+                margin: auto;
+                padding: 0;
+                border: 0;
+            }
+        }
+        @media(max-width:768px){
+            .pattern-attachment-img{
+                height:280px;
+            }
+            .pattern-header {
+                top:40%;
+                h1{
+                    font-size:24px;
+                }
+            }
         }
     }
 </style>

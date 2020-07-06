@@ -8,7 +8,7 @@
         </div>
         <div class="site-name">
             <router-link to="/">
-                <h1>ChunKit</h1>
+                <h1>ChunKit.Au</h1>
             </router-link>
         </div>
         <div class="site-menus">
