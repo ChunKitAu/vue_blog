@@ -1,6 +1,7 @@
 <template>
     <div class="ArticleWrapper">
         <div class='pattern-center-blank'/>
+        <!-- 文章头部显示 -->
         <div class="ArticleTop">
             <div class='pattern-attachment-img'>
                 <img class='lazyload' :src="blog.picture" alt=""/>
@@ -18,7 +19,20 @@
         <div class="MainWrapper">
             <div class="flex-items">
                 <div class='cell'>
+                    <!--文章-->
                     <div id="blog_content" class ='entry-content' v-html="blog.content" v-highlight/>
+                    <!-- 赞赏-->
+                    <div class='single-reward'>
+                        <div class='reward-open'>
+                            <p>赏</p>
+                            <div class='reward-main'>
+                                <ul class='reward-row'>
+                                    <li class="wedonate"><img src="http://cdn.fengziy.cn/gblog/wexin_pay.png"><p>微信</p></li>
+                                    <li class="alidonate"><img src="http://cdn.fengziy.cn/gblog/ali_pay.jpg"><p>支付宝</p></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="toc">
                     <side-catalog class="catalog" v-bind="catalogProps" v-bind:class="{ 'isFixed': catalogFixed}">
@@ -28,7 +42,6 @@
                     </side-catalog>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -36,7 +49,6 @@
 <script>
     import Banner from '@/components/banner'
     import ArticleButtom from '@/components/article_buttom'
-    import ArticleContent from '@/components/article_content'
 
     import SideCatalog from "vue-side-catalog";
 
@@ -62,7 +74,6 @@
         components: {
             Banner,
             ArticleButtom,
-            ArticleContent,
             SideCatalog
         },
         methods: {
