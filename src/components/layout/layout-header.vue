@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import SideMenu from "../home_side_menu";
+    import SideMenu from "../header_side_menu";
     export default {
         name: "layout-header",
         components: {
