@@ -34,8 +34,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="toc">
-                    <side-catalog class="catalog" v-bind="catalogProps" v-bind:class="{ 'isFixed': catalogFixed}">
+                <div class="toc" v-show="catalog_show">
+                    <side-catalog class="catalog" v-bind="catalogProps">
                         <template #default="{level, isActive}">
                             <i :class="['line-style', isActive ? 'line-style--active' : '']"></i>
                         </template>
@@ -61,13 +61,14 @@
                 blog: "",
                 comments: [],
                 imgUrl: "",
-                catalogFixed:false,
+                catalog_show:false,
                 catalogProps: {
                     container: "#blog_content",
                     watch: true,
                     height: "calc(100% - 100px)",
                     levelList: ["h1", "h2", "h3", "h4", "h5"],
                     activeColor:'#FE9600',
+                    title: "Contents"
                 }
             }
         },
@@ -103,10 +104,10 @@
                 var _this = this
                 var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
                 // 400
-                if (scrollTop > 400) {
-                    _this.catalogFixed = true
+                if (scrollTop > 360) {
+                    _this.catalog_show = true
                 } else {
-                    _this.catalogFixed = false
+                    _this.catalog_show = false
                 }
             },
             getComment() {
@@ -125,12 +126,6 @@
     }
 </script>
 <style scoped lang="less">
-    &.isFixed{
-        position: fixed !important;
-        width: 300px !important;
-        right: 0 !important;
-        top: 80px !important;
-    }
     .ArticleWrapper {
         .pattern-center-blank {
             padding-top: 75px;
@@ -236,6 +231,7 @@
         margin-right: auto;
         padding-top:50px;
         background-color: rgba(255,255,255,.8);
+        display: block;
         @keyframes main {
             0% {
                 opacity: 0;
@@ -475,12 +471,15 @@
                 background-color: #FE9600;
             }
         }
+
+        .toc{
+        }
+
         .catalog {
-            position: absolute;
+            position: fixed;
+            top: 80px;
             width: 300px;
             right: 0;
-            top: 450px;
-            height: calc(100% - 50%);
         }
         .side-catalog {
             display: -webkit-box;

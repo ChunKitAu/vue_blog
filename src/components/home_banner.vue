@@ -76,7 +76,7 @@
         props: {
             imgUrl: {
                 type: String,
-                default: 'http://qiniu2.19t.wang/img_24.jpg'
+                default: 'http://qiniu2.19t.wang/img_bg_'+Math.floor(Math.random()*4+1)+'.jpg'
             },
         },
         created() {

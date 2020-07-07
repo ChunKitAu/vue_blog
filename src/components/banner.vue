@@ -3,7 +3,7 @@
         <div class='pattern-center-blank'/>
         <div class="top">
             <div class="pattern-attachment-img">
-                <img class='lazyload' src='https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture' alt=""/>
+                <img class='lazyload' :src='imgUrl' alt=""/>
             </div>
             <template v-if="isTags">
                 <div class="pattern-header">
@@ -26,7 +26,7 @@
         props: {
             imgUrl: {
                 type: String,
-                default: 'http://qiniu2.19t.wang/img_24.jpg'
+                default:  'http://qiniu2.19t.wang/img_bg_'+Math.floor(Math.random()*4+1)+'.jpg',
             },
             isTags: {
                 type: [Boolean, String],
