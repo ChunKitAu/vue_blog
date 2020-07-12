@@ -22,13 +22,18 @@
             </div>
             <div class="menu-item"><router-link to="/tags"><i class="iconfont icon-biaoqian1"></i>标签墙</router-link></div>
             <div class="menu-item"><router-link to="/about"><i class="iconfont icon-biaoqian2"></i>关于</router-link></div>
-            <div class="menu-item"><router-link to="/"><i class="iconfont icon-user"></i></router-link></div>
+
+            <div class="iconBox">
+                <a @click="githubOAuth" v-if="! userInfo"><i class="iconfont icon-user"></i></a>
+                <img v-if="userInfo" :src="userInfo.avatar_url">
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import SideMenu from "../header_side_menu";
+    import openWindow from "../../utils/openWindow";
     export default {
         name: "layout-header",
         components: {
@@ -41,12 +46,15 @@
                 fixed: false,
                 hidden: false,
                 top:false,
-                category: []
+                category: [],
+                userInfo:[],
             }
         },
         mounted(){
-            window.addEventListener('scroll', this.watchScroll)
-            this.getCategorys()
+            var _this = this;
+            window.addEventListener('scroll', _this.watchScroll)
+            _this.userInfo = _this.$store.getters.userInfo;
+            _this.getCategorys()
 
             //监听打开侧边菜单  点击其它div消失
             document.addEventListener('click',ev => {
@@ -93,7 +101,26 @@
                 var _this = this;
                 _this.open = ! _this.open;
                 console.log(_this.open)
+            },
+
+            githubOAuth(){
+                var _this = this;
+                _this.$axios.get("/oauth/authorize").then(function (response) {
+                    openWindow(response.data.data, "github",540,540);
+                    window.addEventListener('message',_this.loginGithubHandler,false);
+                })
+
+            },
+            loginGithubHandler(e) {
+                console.log(e.data);
+                var _this = this;
+                _this.$store.commit('SET_UserInfo', e.data);
+                _this.userInfo = _this.$store.getters.userInfo;
+                window.removeEventListener('message',this.loginGithubHandler,false)
             }
+
+
+
         }
     }
 </script>
@@ -196,6 +223,24 @@
         }
         @media (max-width: 768px){
             display:none;
+        }
+
+
+        .iconBox{
+            i{
+                font-size:24px;
+                margin-left:20px;
+                color:#666666;
+            }
+            i:hover{
+                color:#fe9600;
+            }
+            img{
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                margin-left:20px;
+            }
         }
 
 
