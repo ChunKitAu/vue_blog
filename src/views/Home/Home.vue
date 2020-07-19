@@ -1,6 +1,6 @@
 <template>
-    <div class="home" >
-        <HomeBanner ></HomeBanner>
+    <div class="home">
+        <HomeBanner></HomeBanner>
         <div class="site-content animate">
             <!--文章列表-->
             <main class="site-main" id="blog_list">
@@ -11,6 +11,7 @@
             </main>
         </div>
         <!--加载更多-->
+
         <div class="more" v-show="hasNextPage">
             <div class="more-btn" @click="loadMore">More</div>
         </div>
@@ -19,8 +20,10 @@
 </template>
 
 <script>
-    import HomeBanner from '@/components/home_banner.vue'
-    import HoneArticleList  from "../components/home_article_list";
+    import HomeBanner from '@/components/home/home_banner'
+    import HoneArticleList from "@/components/home/home_article_list";
+    import {getArticles} from "@/api/apis";
+
     export default {
         name: 'Home',
         data() {
@@ -37,46 +40,32 @@
         methods: {
             fetchList() {
                 var _this = this;
-                _this.$axios.get("/article/list", {
-                    params: {
-                        page: _this.currPage,
-                        size: 10
-                    }
-                }).then(
-                    function (response) {
-                        _this.ArticleList = response.data.data
-                        if (_this.currPage < response.data.data[0].totalPgae)
-                            _this.hasNextPage = true
-                        else
-                            _this.hasNextPage = false
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                getArticles({
+                    page: _this.currPage,
+                    size: 10
+                }).then(res=>{
+                    _this.ArticleList = res.data.data
+                    if (_this.currPage < res.data.data[0].totalPage)
+                        _this.hasNextPage = true
+                    else
+                        _this.hasNextPage = false
+                })
             },
             loadMore() {
                 var _this = this;
                 _this.currPage = _this.currPage + 1
-                _this.$axios.get("/article/list", {
-                    params: {
-                        page: _this.currPage,
-                        size: 10
-                    }
-                }).then(
-                    function (response) {
-                        response.data.data.forEach((item,index)=>{
-                            _this.ArticleList.push(item)
-                        })
-                        if (_this.currPage < response.data.data[0].totalPgae)
-                            _this.hasNextPage = true
-                        else
-                            _this.hasNextPage = false
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                getArticles({
+                    page: _this.currPage,
+                    size: 10
+                }).then(res=>{
+                    res.data.data.forEach((item, index) => {
+                        _this.ArticleList.push(item)
+                    })
+                    if (_this.currPage < res.data.data[0].totalPage)
+                        _this.hasNextPage = true
+                    else
+                        _this.hasNextPage = false
+                })
             }
         },
         mounted() {

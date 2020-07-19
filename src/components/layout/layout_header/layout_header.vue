@@ -32,8 +32,10 @@
 </template>
 
 <script>
-    import SideMenu from "../header_side_menu";
-    import openWindow from "../../utils/openWindow";
+    import SideMenu from "@/components/header_side_menu";
+    import openWindow from "../../../utils/openWindow";
+    import {githubOAuth,getTypes} from '@/api/apis'
+
     export default {
         name: "layout-header",
         components: {
@@ -87,7 +89,7 @@
             },
             getCategorys() {
                 var _this = this;
-                _this.$axios.get("/type/list").then(
+                getTypes("/type/list").then(
                     function (response) {
                         _this.category = response.data.data
                     },
@@ -105,7 +107,7 @@
 
             githubOAuth(){
                 var _this = this;
-                _this.$axios.get("/oauth/authorize").then(function (response) {
+                githubOAuth.then(function (response) {
                     openWindow(response.data.data, "github",540,540);
                     window.addEventListener('message',_this.loginGithubHandler,false);
                 })

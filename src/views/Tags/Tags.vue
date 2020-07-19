@@ -12,6 +12,8 @@
 <script>
     import Banner from '@/components/banner'
     import Tag from '@/components/tag'
+    import {getTags} from'@/api/apis'
+
     export default {
         name: "Tags",
         components:{
@@ -26,7 +28,7 @@
         methods:{
             getTags(){
                 var _this = this;
-                _this.$axios.get("/tag/list",{params:{ page:1,size:100}}).then(
+                getTags({ page:1,size:100}).then(
                     function (response) {
                         _this.tags = response.data.data
                     },

@@ -7,10 +7,10 @@
     </div>
 </template>
 <script>
-    import loading from "./components/loading";
-    import layoutHeader from '@/components/layout/layout-header.vue'
-    import layoutBody from '@/components/layout/layout-body'
-    import layoutFooter from '@/components/layout/layout-footer'
+    import loading from "@/components/loading";
+    import layoutHeader from '@/components/layout/layout_header'
+    import layoutBody from '@/components/layout/layout_body'
+    import layoutFooter from '@/components/layout/layout_footer'
     export default {
         name: "app",
         components: {

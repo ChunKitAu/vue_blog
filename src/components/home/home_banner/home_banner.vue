@@ -211,15 +211,15 @@
         }
 
         .waveTop {
-            background-image: url('../assets/images/wave-top.png');
+            background-image: url('../../../assets/images/wave-top.png');
         }
 
         .waveMiddle {
-            background-image: url('../assets/images/wave-mid.png');
+            background-image: url('../../../assets/images/wave-mid.png');
         }
 
         .waveBottom {
-            background-image: url('../assets/images/wave-bot.png');
+            background-image: url('../../../assets/images/wave-bot.png');
         }
 
 

@@ -19,11 +19,12 @@
 
 <script>
     import Banner from '@/components/banner'
-    import AriticleList from'@/components/article_list'
+    import AriticleList from'@/components/ariticle/article_list'
+
+    import {getTypeById,getTypeListById,getTagById,getTagListById} from '@/api/apis'
 
     export default {
         name: 'Category',
-        props: ['cate', 'words','tagId'],
         data() {
             return {
                 toBannerMessage:'',
@@ -32,7 +33,11 @@
                 features: [],
                 ariticleList: [],
                 currPage: 1,
-                hasNextPage: false
+                hasNextPage: false,
+
+                tgaId:'',
+                typeId:'',
+                searchWords:"",
             }
         },
         components: {
@@ -40,13 +45,13 @@
             AriticleList,
         },
         computed: {
-            searchWords() {
+            getSearchWords() {
                 return this.$route.params.words
             },
-            category() {
+            getCategory() {
                 return this.$route.params.cate
             },
-            tag_Id(){
+            getTagId(){
                 return this.$route.params.tagId
             }
         },
@@ -54,116 +59,107 @@
             //获取当前分类的信息
             getCategoryName(categoryId){
                 var _this = this;
-                _this.$axios.get("/type/"+categoryId).then(
-                    function (response) {
-                        _this.categoryName = response.data.data.name
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                getTypeById(categoryId).then(res=>{
+                    _this.categoryName = res.data.data.name;
+                })
             },
             //获取当前分类的所有文章
             getCategoryList(categoryId) {
                 var _this = this;
-                _this.$axios.get("/article/type/list/"+categoryId,{params:{ page:_this.currPage,size:10}}).then(
-                    function (response) {
-                        _this.ariticleList = response.data.data
-                        if(_this.currPage < response.data.data[0].totalPgae)
-                            _this.hasNextPage = true
+                getTypeListById(categoryId,{ page:_this.currPage,size:10}).then(res=>{
+                        _this.ariticleList = res.data.data;
+                        if(_this.currPage < res.data.data[0].totalPage)
+                            _this.hasNextPage = true;
                         else
                             _this.hasNextPage = false
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                    })
             },
             //获取当前标签的信息
             getTagName(tagId){
                 var _this = this;
-                _this.$axios.get("/tag/"+tagId).then(
-                    function (response) {
-                        _this.tagName = response.data.data.name
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                getTagById(tagId).then(res=>{
+                    _this.tagName = res.data.data.name
+                })
             },
             //获取当前标签的所有文章
             getTagList(tagId){
                 var _this = this;
-                _this.$axios.get("/article/tag/list/"+tagId,{params:{ page:_this.currPage,size:10}}).then(
-                    function (response) {
-                        _this.ariticleList = response.data.data
-                        if(_this.currPage < response.data.data[0].totalPgae)
-                            _this.hasNextPage = true
-                        else
-                            _this.hasNextPage = false
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                getTagListById(tagId,{ page:_this.currPage,size:10}).then(res=>{
+                    _this.ariticleList = res.data.data
+                    if(_this.currPage < res.data.data[0].totalPage)
+                        _this.hasNextPage = true
+                    else
+                        _this.hasNextPage = false
+                })
             },
             //加载更多
             loadMore() {
                 var _this = this;
-                _this.currPage = _this.currPage + 1
-                _this.$axios.get("/article/list",{params:{ page:_this.currPage,size:10}}).then(
-                    function (response) {
-                        response.data.data.forEach((item,index)=>{
+                _this.currPage = _this.currPage + 1;
+                if(_this.getTagId){
+                    getTagListById(_this.getTagId,{
+                        page:_this.currPage,size:10
+                    }).then(res=>{
+                        res.data.data.forEach((item,index)=>{
                             _this.ariticleList
                                 .push(item)
-                        })
-                        if(_this.currPage < response.data.data[0].totalPgae)
+                        });
+                        if(_this.currPage < res.data.data[0].totalPage)
                             _this.hasNextPage = true
                         else
                             _this.hasNextPage = false
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                    })
+                }else if(_this.getCategory) {
+                    getTypeListById(_this.getCategory,{
+                        page:_this.currPage,size:10
+                    }).then(res=>{
+                        res.data.data.forEach((item,index)=>{
+                            _this.ariticleList
+                                .push(item)
+                        });
+                        if(_this.currPage < res.data.data[0].totalPage)
+                            _this.hasNextPage = true
+                        else
+                            _this.hasNextPage = false
+                    })
+                }
             }
         },
         mounted() {
             var _this = this;
-            if(_this.tag_Id){
-                _this.getTagList(this.$route.params.tagId);
-                _this.getTagName(this.$route.params.tagId);
+            if(_this.getTagId){
+                _this.getTagList(_this.getTagId);
+                _this.getTagName(_this.getTagId);
                 setTimeout(() => {
-                    document.title = '标签：'+_this.tagName
-                    _this.toBannerMessage = _this.tagName
+                    document.title = '标签：'+_this.tagName;
+                    _this.toBannerMessage = _this.tagName;
                 },300)
-            }else if(_this.category){
-                _this.getCategoryList(this.$route.params.cate);
-                _this.getCategoryName(this.$route.params.cate);
+            }else if(_this.getCategory){
+                _this.getCategoryList(_this.getCategory);
+                _this.getCategoryName(_this.getCategory);
                 setTimeout(() => {
-                    document.title = '分类：'+_this.categoryName
-                    _this.toBannerMessage = _this.categoryName
+                    document.title = '分类：'+_this.categoryName;
+                    _this.toBannerMessage = _this.categoryName;
                 },300)
             }
         },
         watch:{
             //监听相同路由下参数变化的时候，从而实现异步刷新
             "$route": function(){
-                console.log(1)
                 var _this = this;
-                if(_this.tag_Id){
-                    _this.getTagList(_this.tag_Id);
-                    _this.getTagName(_this.tag_Id);
+                if(_this.getTagId){
+                    _this.getTagList(_this.getTagId);
+                    _this.getTagName(_this.getTagId);
                     setTimeout(() => {
-                        document.title = '标签：'+_this.tagName
-                        _this.toBannerMessage = _this.tagName
+                        document.title = '标签：'+_this.tagName;
+                        _this.toBannerMessage = _this.tagName;
                     },300)
-                }else if(_this.category){
-                    _this.getCategoryList(_this.category);
-                    _this.getCategoryName(_this.category);
+                }else if(_this.getCategory){
+                    _this.getCategoryList(_this.getCategory);
+                    _this.getCategoryName(_this.getCategory);
                     setTimeout(() => {
-                        document.title = '分类：'+_this.categoryName
-                        _this.toBannerMessage = _this.categoryName
+                        document.title = '分类：'+_this.categoryName;
+                        _this.toBannerMessage = _this.categoryName;
                     },300)
                 }
             }

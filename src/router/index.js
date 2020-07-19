@@ -8,31 +8,31 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/Home.vue'),
+    component: () => import('../views/Home/Home.vue'),
     meta: { title: '首页'}
   },
   {
     path: '/article/:id',
     name: 'Article',
-    component: () => import('../views/Article.vue'),
+    component: () => import('../views/Article/Article.vue'),
     meta: { title: '文章'}
   },
     {
       path: '/category/:cate',
       name: 'Category',
-      component: () => import('../views/Category.vue'),
+      component: () => import('../views/Category/Category.vue'),
       meta: { title: '分类', params: 'cate'}
     },
     {
       path: '/tags',
       name: 'tags',
-      component: () => import('../views/Tags.vue'),
+      component: () => import('../views/Tags/Tags.vue'),
       meta: { title: '分类'}
     },
     {
       path: '/tag/:tagId',
       name: 'Tag',
-      component: () => import('../views/Category.vue'),
+      component: () => import('../views/Category/Category.vue'),
       meta: { title: '标签', params: 'tagId'}
     },
 ]

@@ -47,8 +47,10 @@
 </template>
 
 <script>
+    import {getArticleById} from "@/api/apis";
     import Banner from '@/components/banner'
-    import ArticleButtom from '@/components/article_buttom'
+    import ArticleButtom from '@/components/ariticle/article_buttom'
+
 
     import SideCatalog from "vue-side-catalog";
 
@@ -68,7 +70,6 @@
                     height: "calc(100% - 100px)",
                     levelList: ["h1", "h2", "h3", "h4", "h5"],
                     activeColor:'#FE9600',
-                    title: "Contents"
                 }
             }
         },
@@ -82,7 +83,7 @@
             getAticle() {
                 var _this = this;
                 const blogId = this.$route.params.id
-                _this.$axios.get("/article/" + blogId).then(
+                getArticleById(blogId).then(
                     function (response) {
                         //markdown渲染
                         var MarkdownIt = require("markdown-it")
