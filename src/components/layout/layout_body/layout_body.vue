@@ -1,10 +1,13 @@
 <template>
     <div id="layout-body">
+        <vueCanvasNest :config="{color:'0,0,0', count: 200}" :el="'#layout-body'"></vueCanvasNest>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
+    import vueCanvasNest from 'vue-canvas-nest'
+
     export default {
         name: "layout-body",
         data(){
@@ -13,7 +16,7 @@
           }
         },
         components: {
-
+            vueCanvasNest
         }
     }
 </script>

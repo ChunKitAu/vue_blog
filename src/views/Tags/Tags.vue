@@ -28,14 +28,9 @@
         methods:{
             getTags(){
                 var _this = this;
-                getTags({ page:1,size:100}).then(
-                    function (response) {
-                        _this.tags = response.data.data
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                getTags({ page:1,size:100}).then(res=>{
+                    _this.tags = res.data.data
+                })
             }
         },
         created() {

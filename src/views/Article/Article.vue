@@ -83,22 +83,17 @@
             getAticle() {
                 var _this = this;
                 const blogId = this.$route.params.id
-                getArticleById(blogId).then(
-                    function (response) {
-                        //markdown渲染
-                        var MarkdownIt = require("markdown-it")
-                        var md = new MarkdownIt()
-                        _this.blog = response.data.data
-                        var content = md.render(response.data.data.content)
-                        _this.blog.content = content
-                        _this.imgUrl = response.data.data.picture
+                getArticleById(blogId).then(res=>{
+                    //markdown渲染
+                    var MarkdownIt = require("markdown-it")
+                    var md = new MarkdownIt()
+                    _this.blog = res.data.data
+                    var content = md.render(res.data.data.content)
+                    _this.blog.content = content
+                    _this.imgUrl = res.data.data.picture
 
-                        document.title = _this.blog.title
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                    document.title = _this.blog.title
+                })
             },
             //监听目录  固定位置
             handleScroll () {
