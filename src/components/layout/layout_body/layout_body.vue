@@ -1,6 +1,6 @@
 <template>
     <div id="layout-body">
-        <vueCanvasNest :config="{color:'0,0,0', count: 200}" :el="'#layout-body'"></vueCanvasNest>
+        <vueCanvasNest :config="{color:'0,0,0', count: 200,opacity:0.9}" :el="'#layout-body'"></vueCanvasNest>
         <router-view></router-view>
     </div>
 </template>
