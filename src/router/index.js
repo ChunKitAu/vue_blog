@@ -20,7 +20,7 @@ Vue.use(VueRouter)
     {
       path: '/category/:cate',
       name: 'Category',
-      component: () => import('../views/Category/Category.vue'),
+      component: () => import('../views/Type_Tag_Search/Type_Tag_Search.vue'),
       meta: { title: '分类', params: 'cate'}
     },
     {
@@ -32,7 +32,7 @@ Vue.use(VueRouter)
     {
       path: '/tag/:tagId',
       name: 'Tag',
-      component: () => import('../views/Category/Category.vue'),
+      component: () => import('../views/Type_Tag_Search/Type_Tag_Search.vue'),
       meta: { title: '标签', params: 'tagId'}
     },
 ]
@@ -42,6 +42,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+//设置loading 和title
 router.beforeEach((to, from, next) => {
   let title = 'MyBlog'
   if (to.meta.params){

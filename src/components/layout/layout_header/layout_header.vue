@@ -155,7 +155,7 @@
         }
         &.hidden{
             background-color: #FFFFFF;
-            opacity: 0.9;
+            opacity: 0;
             /*top: -100px;*/
         }
         &.fixed{

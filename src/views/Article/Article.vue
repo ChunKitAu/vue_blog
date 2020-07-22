@@ -9,7 +9,7 @@
             <div class='single-header'>
                 <h1 class='entry-title'>{{blog.title}}</h1>
                 <p class='entry-census'>
-<!--                    <span class="bull">·</span>-->
+                    <!--                    <span class="bull">·</span>-->
                     <span>最后修改时间：{{blog.createTime}}</span>
                     <span class="bull">·</span>
                     <span>{{blog.views}}次阅读</span>
@@ -20,26 +20,63 @@
             <div class="flex-items">
                 <div class='cell'>
                     <!--文章-->
-                    <div id="blog_content" class ='entry-content' v-html="blog.content" v-highlight/>
+                    <div id="blog_content" class='entry-content' v-html="blog.content" v-highlight/>
                     <!-- 赞赏-->
                     <div class='single-reward'>
                         <div class='reward-open'>
                             <p>赏</p>
                             <div class='reward-main'>
                                 <ul class='reward-row'>
-                                    <li class="wedonate"><img src="http://cdn.fengziy.cn/gblog/wexin_pay.png"><p>微信</p></li>
-                                    <li class="alidonate"><img src="http://cdn.fengziy.cn/gblog/ali_pay.jpg"><p>支付宝</p></li>
+                                    <li class="wedonate"><img src="http://cdn.fengziy.cn/gblog/wexin_pay.png">
+                                        <p>微信</p></li>
+                                    <li class="alidonate"><img src="http://cdn.fengziy.cn/gblog/ali_pay.jpg">
+                                        <p>支付宝</p></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--目录-->
                 <div class="toc" v-show="catalog_show">
                     <side-catalog class="catalog" v-bind="catalogProps">
                         <template #default="{level, isActive}">
                             <i :class="['line-style', isActive ? 'line-style--active' : '']"></i>
                         </template>
                     </side-catalog>
+                </div>
+
+                <!--评论-->
+                <div class="CommentsWrapper">
+                    <h3 class='comments-list-title'>Comments | <span class="noticom">2 条评论 </span></h3>
+                    <ul class='commentwrap' v-for="count in 3">
+                        <Comment></Comment>
+                    </ul>
+                    <div class="CommentTextarea">
+                        <!--输入框-->
+                        <textarea
+                                placeholder="你是我一生只会遇见一次的惊喜 ..."
+                                name="comment"
+                                class="commentbody"
+                                id="comment"
+                                rows="5" tabIndex="4"
+                                value={this.state.value}
+                                onChange={}
+                        />
+                        <!--提交按钮-->
+                        <div class='form-submit'>
+                            <input
+                                    onClick={}
+                                    name="submit"
+                                    type="submit"
+                                    id="submit"
+                                    class="submit"
+                                    value="BiuBiuBiu~"
+                            />
+                        </div>
+                        <p class='text'>此处评论已关闭</p>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -50,7 +87,7 @@
     import {getArticleById} from "@/api/apis";
     import Banner from '@/components/banner'
     import ArticleButtom from '@/components/ariticle/article_buttom'
-
+    import Comment from "@/components/comment";
 
     import SideCatalog from "vue-side-catalog";
 
@@ -63,27 +100,28 @@
                 blog: "",
                 comments: [],
                 imgUrl: "",
-                catalog_show:false,
+                catalog_show: false,
                 catalogProps: {
                     container: "#blog_content",
                     watch: true,
                     height: "calc(100% - 100px)",
                     levelList: ["h1", "h2", "h3", "h4", "h5"],
-                    activeColor:'#FE9600',
+                    activeColor: '#FE9600',
                 }
             }
         },
         components: {
             Banner,
             ArticleButtom,
-            SideCatalog
+            SideCatalog,
+            Comment
         },
         methods: {
             //获取文章
             getAticle() {
                 var _this = this;
                 const blogId = this.$route.params.id
-                getArticleById(blogId).then(res=>{
+                getArticleById(blogId).then(res => {
                     //markdown渲染
                     var MarkdownIt = require("markdown-it")
                     var md = new MarkdownIt()
@@ -96,7 +134,7 @@
                 })
             },
             //监听目录  固定位置
-            handleScroll () {
+            handleScroll() {
                 var _this = this
                 var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
                 // 400
@@ -116,7 +154,7 @@
             }, 500)
             window.addEventListener('scroll', this.handleScroll)
         },
-        destroyed () {
+        destroyed() {
             window.removeEventListener('scroll', this.handleScroll)
         },
     }
@@ -134,36 +172,41 @@
             }
         }
     }
-    .ArticleTop{
+
+    .ArticleTop {
         position: relative;
         top: 0;
         left: 0;
         width: 100%;
         overflow: hidden;
-        &:before{
+
+        &:before {
             content: "";
             position: absolute;
             top: 0;
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: rgba(0,0,0,.3);
+            background-color: rgba(0, 0, 0, .3);
         }
-        .pattern-attachment-img{
+
+        .pattern-attachment-img {
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center center;
             background-origin: border-box;
             width: 100%;
             height: 350px;
-            img{
+
+            img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
                 pointer-events: none;
             }
         }
-        .single-header{
+
+        .single-header {
             max-width: 900px;
             padding: 0 10px;
             margin-left: auto;
@@ -177,21 +220,25 @@
             color: #fff;
             text-shadow: 2px 2px 10px #000;
             z-index: 1;
-            .entry-title{
+
+            .entry-title {
                 font-size: 32px;
                 width: 100%;
                 color: #fff;
                 font-weight: bold;
             }
-            .entry-census{
+
+            .entry-census {
                 color: #fff;
                 font-size: 14px;
                 padding: 18px 0 0;
                 line-height: 39px;
-                span{
+
+                span {
                     color: #fff;
                     font-size: 14px;
-                    img{
+
+                    img {
                         width: 35px;
                         height: 35px;
                         border-radius: 100%;
@@ -199,34 +246,38 @@
                         margin-right: 12px;
                     }
                 }
+
                 .bull {
                     margin: 0 5px;
                 }
             }
         }
-        @media(max-width:768px){
-            .pattern-attachment-img{
-                height:280px;
+
+        @media (max-width: 768px) {
+            .pattern-attachment-img {
+                height: 280px;
             }
-            .single-header{
-                .entry-title{
+
+            .single-header {
+                .entry-title {
                     font-size: 24px;
                 }
-                .entry-census{
-                    padding:0;
+
+                .entry-census {
+                    padding: 0;
                 }
             }
         }
     }
 
-    .MainWrapper{
-        min-height:600px;
+    .MainWrapper {
+        min-height: 600px;
         max-width: 900px;
         padding: 0 10px;
         margin-left: auto;
         margin-right: auto;
-        padding-top:50px;
-        background-color: rgba(255,255,255,.8);
+        padding-top: 50px;
+        background-color: rgba(255, 255, 255, .8);
         display: block;
         @keyframes main {
             0% {
@@ -238,15 +289,17 @@
                 transform: translateY(0)
             }
         }
-        .cell{
-            margin-right:25px;
+
+        .cell {
+            margin-right: 25px;
         }
+
         .entry-content {
             position: relative;
             animation: main 1s;
         }
 
-        .entry-content .begin,.single-begin {
+        .entry-content .begin, .single-begin {
             float: left;
             font-size: 3.6em;
             line-height: 1em;
@@ -256,8 +309,8 @@
         }
 
         @media screen and (max-width: 860px) {
-            .entry-content .begin,.single-begin {
-                margin-top:6px
+            .entry-content .begin, .single-begin {
+                margin-top: 6px
             }
         }
 
@@ -268,7 +321,7 @@
             color: #616161;
             margin-left: 0;
             border-radius: 10px;
-            margin:16px 0;
+            margin: 16px 0;
         }
 
         .entry-content ol {
@@ -278,7 +331,7 @@
             color: #616161;
             margin-left: 0;
             border-radius: 10px;
-            margin:16px 0;
+            margin: 16px 0;
         }
 
         .entry-content table {
@@ -291,7 +344,7 @@
             font-weight: 600;
         }
 
-        .entry-content table th,.entry-content table td {
+        .entry-content table th, .entry-content table td {
             padding: 6px 13px;
             border: 1px solid #dfe2e5;
         }
@@ -311,15 +364,15 @@
             border-left: .25em solid #dfe2e5;
         }
 
-        .entry-content blockquote>:first-child {
+        .entry-content blockquote > :first-child {
             margin-top: 0;
         }
 
-        .entry-content blockquote>:last-child {
+        .entry-content blockquote > :last-child {
             margin-bottom: 0;
         }
 
-        .entry-content ol li,.entry-content ul li {
+        .entry-content ol li, .entry-content ul li {
             padding: 8px 0
         }
 
@@ -327,60 +380,60 @@
             padding-bottom: 8px;
             border-bottom: 1px dashed #ddd;
             color: #737373;
-            margim:17px 0;
+            margim: 17px 0;
         }
 
-        .entry-content h3,.entry-content h4,.entry-content h5 {
+        .entry-content h3, .entry-content h4, .entry-content h5 {
             padding-left: 16px;
         }
 
-        .entry-content h1{
-            margin:16px 0;
-            clear:both;
-            font-size:24px;
-            color:rgb(64, 64, 64);
+        .entry-content h1 {
+            margin: 16px 0;
+            clear: both;
+            font-size: 24px;
+            color: rgb(64, 64, 64);
         }
 
-        .entry-content h2{
-            margin:18px 0;
-            clear:both;
-            font-size:22px;
-            color:rgb(64, 64, 64);
+        .entry-content h2 {
+            margin: 18px 0;
+            clear: both;
+            font-size: 22px;
+            color: rgb(64, 64, 64);
         }
 
-        .entry-content h3{
-            margin:17px 0;
-            clear:both;
-            font-size:20px;
-            color:rgb(64, 64, 64);
+        .entry-content h3 {
+            margin: 17px 0;
+            clear: both;
+            font-size: 20px;
+            color: rgb(64, 64, 64);
         }
 
-        .entry-content h4{
-            margin:16px 0;
-            clear:both;
-            font-size:18px;
-            color:rgb(64, 64, 64);
+        .entry-content h4 {
+            margin: 16px 0;
+            clear: both;
+            font-size: 18px;
+            color: rgb(64, 64, 64);
         }
 
-        .entry-content h5{
-            margin:15px 0;
-            clear:both;
-            font-size:16px;
-            color:rgb(64, 64, 64);
+        .entry-content h5 {
+            margin: 15px 0;
+            clear: both;
+            font-size: 16px;
+            color: rgb(64, 64, 64);
         }
 
-        .entry-content h6{
-            margin:14px 0;
-            clear:both;
-            font-size:14px;
-            color:rgb(64, 64, 64);
+        .entry-content h6 {
+            margin: 14px 0;
+            clear: both;
+            font-size: 14px;
+            color: rgb(64, 64, 64);
         }
 
-        .entry-content h2:after,.entry-content h1:after {
+        .entry-content h2:after, .entry-content h1:after {
             content: "\\00B6";
             position: absolute;
             color: #ff6d6d;
-            font-family: 'Merriweather Sans',Helvetica,Tahoma,Arial,'PingFang SC','Hiragino Sans GB','Microsoft Yahei','WenQuanYi Micro Hei',sans-serif;
+            font-family: 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;
             padding-left: 6px;
             font-size: 1.03em;
         }
@@ -453,8 +506,8 @@
         }
 
 
-        .entry-content img{
-            max-width:100%;
+        .entry-content img {
+            max-width: 100%;
         }
 
         .example {
@@ -463,12 +516,13 @@
             margin-bottom: 20px;
             padding: 30px 50px;
             margin: 20px 0;
-            i{
+
+            i {
                 background-color: #FE9600;
             }
         }
 
-        .toc{
+        .toc {
         }
 
         .catalog {
@@ -477,6 +531,7 @@
             width: 300px;
             right: 0;
         }
+
         .side-catalog {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -493,6 +548,7 @@
             width: 3px;
             background: transparent;
         }
+
         .line-style--active {
             background: currentColor;
         }
@@ -579,16 +635,17 @@
             font-weight: 700
         }
 
-        .flex-items{
+        .flex-items {
             align-items: initial;
         }
 
-        .single-reward{
+        .single-reward {
             position: relative;
             width: 100%;
             margin: 35px auto;
             text-align: center;
             z-index: 90;
+
             .reward-open {
                 position: relative;
                 width: 40px;
@@ -602,10 +659,12 @@
                 background: #d34836;
                 cursor: pointer;
             }
-            .reward-open:hover .reward-main{
+
+            .reward-open:hover .reward-main {
                 display: block;
             }
-            .reward-main{
+
+            .reward-main {
                 position: absolute;
                 top: 40px;
                 left: -157px;
@@ -616,7 +675,8 @@
                 display: none;
                 animation: main .4s;
             }
-            .reward-row{
+
+            .reward-row {
                 list-style: disc;
                 border: 1px dashed #e4e4e4;
                 margin: 0 auto;
@@ -625,17 +685,20 @@
                 display: inline-block;
                 border-radius: 4px;
                 cursor: auto;
-                li{
+
+                li {
                     list-style-type: none;
                     padding: 0 12px;
                     display: inline-block;
-                    img{
+
+                    img {
                         width: 130px;
                         max-width: 130px;
                         border-radius: 3px;
                         position: relative;
                     }
-                    p{
+
+                    p {
                         color: #666666;
                         font-size: 12px;
                         text-align: center;
@@ -644,16 +707,148 @@
             }
         }
 
-        @media(max-width:768px){
-            padding:10px;
-            min-height:400px;
-            .cell{
-                margin:0;
+        @media (max-width: 768px) {
+            padding: 10px;
+            min-height: 400px;
+            .cell {
+                margin: 0;
             }
-            .catalog{
-                display:none;
+
+            .catalog {
+                display: none;
             }
         }
+    }
+
+
+    //           评论
+    .CommentsWrapper {
+        padding-top: 40px;
+
+        .comments-list-title {
+            width: 100%;
+            margin: 0 auto;
+            margin-bottom: 40px;
+            color: #7d7d7d;
+            font-weight: 400;
+
+            span {
+                font-size: 13px;
+                font-weight: 400;
+                color: #909090;
+            }
+        }
+
+        .commentwrap {
+            margin: 0 auto 30px;
+
+        }
+
+        .pagination {
+            margin: 20px 0;
+
+            .ant-pagination-item {
+                border: none;
+                font-family: inherit;
+                font-size: 15px;
+            }
+
+            .ant-pagination-item a {
+                font-family: inherit;
+                font-size: 15px;
+            }
+
+            .ant-pagination-item-active a {
+                color: #FE9600;
+            }
+
+            .ant-pagination-item:focus a, .ant-pagination-item:hover a {
+                color: #FE9600;
+            }
+
+            .ant-pagination-next, .ant-pagination-prev {
+                color: #FE9600;
+                font-family: inherit;
+                font-size: 15px;
+            }
+
+            .ant-pagination-next span, .ant-pagination-prev span {
+                color: #FE9600;
+                font-family: inherit;
+                font-size: 15px;
+            }
+
+            .ant-pagination-next:hover span, .ant-pagination-prev:hover span {
+                color: #FE9600;
+            }
+
+            .ant-pagination-disabled span {
+                color: rgba(0, 0, 0, 0.25);
+            }
+
+            .ant-pagination-disabled:hover span {
+                color: rgba(0, 0, 0, 0.25);
+            }
+        }
+
+        .text {
+            font-size: 14px;
+            padding: 20px 0;
+        }
+
+    }
+
+
+    .CommentTextarea {
+        position: relative;
+        .commentbody {
+            width: 100%;
+            background: transparent url("https://view.moezx.cc/images/2018/03/24/comment-bg.png") no-repeat scroll right center / contain;
+            padding: 21px 21px 20px;
+            font-size: 14px;
+            display: block;
+            height: 180px;
+            margin-bottom: 10px;
+            color: rgb(83, 90, 99);
+            border: 1px solid rgb(221, 221, 221);
+            resize: vertical;
+            border-radius: 6px;
+            outline: currentcolor none medium;
+        };
+
+        .commentbody:focus {
+            border: 1px solid #FE9600;
+        }
+
+        .form-submit {
+            clear: both;
+            display: block;
+            overflow: hidden;
+            margin: 20px 0;
+
+            input {
+                background: #fff;
+                border-radius: 6px;
+                width: 100%;
+                margin: 0;
+                padding: 15px 25px;
+                text-transform: none;
+                color: #535a63;
+                -webkit-transition: all .1s ease-out;
+                -moz-transition: all .1s ease-out;
+                transition: all .1s ease-out;
+                box-shadow: none;
+                border: 1px solid #ccc;
+                text-shadow: none;
+            }
+
+            input:hover {
+                border: 1px solid #fe9600;
+                border-color: #FE9600;
+                color: #FE9600;
+            }
+        }
+
     }
 
 </style>

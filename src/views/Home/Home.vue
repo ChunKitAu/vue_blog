@@ -4,7 +4,7 @@
         <div class="site-content animate">
             <!--文章列表-->
             <main class="site-main" id="blog_list">
-                <!--      <section-title v-if="!hideSlogan">推荐</section-title>-->
+<!--                      <section-title v-if="!hideSlogan">推荐</section-title>-->
                 <template v-for="(item,index) in ArticleList">
                     <HoneArticleList :post="item" :index="index"></HoneArticleList>
                 </template>
@@ -15,7 +15,9 @@
         <div class="more" v-show="hasNextPage">
             <div class="more-btn" @click="loadMore">More</div>
         </div>
-
+        <div class="no_more" v-show="!hasNextPage">
+            <div>没有了</div>
+        </div>
     </div>
 </template>
 
@@ -120,6 +122,26 @@
                 color: #8fd0cc;
                 border: 1px dashed #8fd0cc;
             }
+        }
+    }
+
+
+    .no_more{
+        display: block;
+        height: 1px;
+        width: 100%;
+        margin: 24px 0;
+        background-color: #dcdfe6;
+        position: relative;
+        div{
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            position: absolute;
+            background-color: #fff;
+            padding: 0 20px;
+            color: #303133;
+            font-weight: 500;
+            font-size: 14px;
         }
     }
 

@@ -2,6 +2,9 @@
     <div class="home">
         <banner :message="toBannerMessage"></banner>
         <div class="site-content animate">
+            <div class="page-header">
+                <h1 class="page-title">" {{toBannerMessage}} "相关文章</h1>
+            </div>
             <!--文章列表-->
             <main class="site-main" >
                 <template v-for="item in ariticleList">
@@ -13,6 +16,10 @@
             <div class="more" v-show="hasNextPage">
                 <div class="more-btn" @click="loadMore">More</div>
             </div>
+            <div class="no_more" v-show="!hasNextPage">
+                <div>No  More</div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -211,6 +218,25 @@
         }
     }
 
+    .no_more{
+        display: block;
+        height: 1px;
+        width: 100%;
+        margin: 24px 0;
+        background-color: #dcdfe6;
+        position: relative;
+        div{
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            position: absolute;
+            background-color: #fff;
+            padding: 0 20px;
+            color: #303133;
+            font-weight: 500;
+            font-size: 14px;
+        }
+    }
+
     /******/
     @media (max-width: 800px) {
         .top-feature {
@@ -222,6 +248,20 @@
         }
 
     }
-
     /******/
+
+    .page-header{
+        position: relative;
+        text-align: center;
+        margin-bottom: 50px;
+        color: #9C9C9C;
+        h1{
+            font-size: 20px;
+            font-weight: 400;
+            border: 1px dashed #ddd;
+            padding: 15px;
+            color: #828282;
+        }
+    }
+
 </style>
