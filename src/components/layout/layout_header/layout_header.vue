@@ -107,7 +107,7 @@
 
             githubOAuth(){
                 var _this = this;
-                githubOAuth.then(function (response) {
+                githubOAuth().then(function (response) {
                     openWindow(response.data.data, "github",540,540);
                     window.addEventListener('message',_this.loginGithubHandler,false);
                 })
