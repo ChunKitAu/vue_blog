@@ -1,7 +1,7 @@
 import axios from 'axios';
 import QS from 'qs';
 import Vue from "../main";
-
+import router from "../router";
 
 //认证失败
 let token_confrim_fail = 520;
@@ -28,7 +28,6 @@ class HttpRequest {
         // 请求拦截器
         this.instance.interceptors.request.use(config => {
             // do something
-
             return config;
         }, error => {
             // do something
@@ -37,11 +36,17 @@ class HttpRequest {
 
         // 响应拦截器
         this.instance.interceptors.response.use(response => {
-
-            if(response.data.code === success){
-                return response;
+            switch (response.data.code) {
+                case success:
+                    return response;
+                    break;
+                case 530:
+                    router.push({
+                        path: "/404"
+                    });
+                    return Promise.reject();
+                    break;
             }
-
         }, error => {
             // do something
             return Promise.reject(error);

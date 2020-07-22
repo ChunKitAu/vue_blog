@@ -37,7 +37,7 @@ Vue.use(VueRouter)
     },
     {
       path:'/404',
-      name:'404',
+      name:'NotFound',
       component:()=> import('../components/error/404'),
       meta:{title:'Not Found'}
     },

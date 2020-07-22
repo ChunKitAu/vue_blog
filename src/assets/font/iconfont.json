@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12579273",
+      "name": "flickr",
+      "font_class": "flickr",
+      "unicode": "e722",
+      "unicode_decimal": 59170
+    },
+    {
       "icon_id": "12025569",
       "name": "chevron_down",
       "font_class": "chevron_down",
