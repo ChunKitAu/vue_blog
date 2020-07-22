@@ -35,6 +35,16 @@ Vue.use(VueRouter)
       component: () => import('../views/Type_Tag_Search/Type_Tag_Search.vue'),
       meta: { title: '标签', params: 'tagId'}
     },
+    {
+      path:'/404',
+      name:'404',
+      component:()=> import('../components/error/404'),
+      meta:{title:'Not Found'}
+    },
+    {
+      path:"*",
+      redirect:"/404",
+    },
 ]
 
 const router = new VueRouter({
