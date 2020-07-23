@@ -1,24 +1,32 @@
 <template>
-    <li class='comment'>
+    <li class='comment' :class="{'child':isChild}">
         <div class='commentinfo flex-items'>
             <img src="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture" alt=""/>
             <div class='commeta cell'>
-                <h2>Test</h2>
-                <h3>2000|1111|asd</h3>
+                <h2>{{comment.userName}} <span v-if="comment.parentUserName">| @{{comment.parentUserName}} </span></h2>
+                <h3>{{comment.createTime}}</h3>
             </div>
             <span class='comment-reply-link'>Reply</span>
         </div>
         <div class='body'>
-            <p>{item.parentUserName && <span>@{item.parentUserName}</span>}{item.content}</p>
+            <p> {{comment.content}}</p>
         </div>
         <hr/>
-
     </li>
 </template>
 
 <script>
     export default {
-        name: "comment"
+        name: "comment",
+        props:{
+            comment:{
+                type:Object,
+            },
+            isChild:{
+                type: Boolean,
+                default:false,
+            }
+        }
     }
 </script>
 
@@ -104,8 +112,11 @@
             width: 100%;
             background: #eee;
             border: 0;
-            margin: 40px 0
+            margin: 10px 0
         }
+    }
+    .child{
+        padding-left: 50px;
     }
     .flex-items {
         -moz-box-align: initial;

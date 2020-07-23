@@ -12,7 +12,6 @@ export const urls = {
     //分页获取所有分类
     getTypes:'/type/list',
 
-
     //获取标签信息
     getTagById:'/tag/',
     //获取标签下所有文章
@@ -20,10 +19,11 @@ export const urls = {
     //分页获取所有标签
     getTags:'/tag/list',
 
-
     //github认证
-    GithubOAuth:'/oauth/authorize'
+    GithubOAuth:'/oauth/authorize',
 
+    //根据文章id获取所有评论
+    getAllCommentByBlogId:'comment/blog/',
 
 
 }

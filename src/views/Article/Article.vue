@@ -47,10 +47,16 @@
 
                 <!--评论-->
                 <div class="CommentsWrapper">
-                    <h3 class='comments-list-title'>Comments | <span class="noticom">2 条评论 </span></h3>
-                    <ul class='commentwrap' v-for="count in 3">
-                        <Comment></Comment>
-                    </ul>
+                    <h3 class='comments-list-title'>Comments | <span class="noticom">评论 </span></h3>
+                    <div>
+                        <ul class='commentwrap' v-for="item in this.comments">
+                            <Comment :comment="item"></Comment>
+                            <template v-if="item.childComment">
+                                <comment v-for="child in item.childComment"  :comment="child" :isChild="true"></comment>
+                            </template>
+                        </ul>
+
+                    </div>
                     <div class="CommentTextarea">
                         <!--输入框-->
                         <textarea
@@ -73,7 +79,8 @@
                                     value="BiuBiuBiu~"
                             />
                         </div>
-                        <p class='text'>此处评论已关闭</p>
+
+                        <p v-if="!blog.commentabled" class='text'>此处评论已关闭</p>
                     </div>
 
 
@@ -84,7 +91,7 @@
 </template>
 
 <script>
-    import {getArticleById} from "@/api/apis";
+    import {getArticleById,getAllCommentByBlogId} from "@/api/apis";
     import Banner from '@/components/banner'
     import ArticleButtom from '@/components/ariticle/article_buttom'
     import Comment from "@/components/comment";
@@ -95,7 +102,7 @@
         name: 'articles',
         data() {
             return {
-                id: "",
+                id: 0,
                 showDonate: false,
                 blog: "",
                 comments: [],
@@ -120,23 +127,29 @@
             //获取文章
             getAticle() {
                 var _this = this;
-                const blogId = this.$route.params.id
-                getArticleById(blogId).then(res => {
+                getArticleById(_this.id).then(res => {
                     //markdown渲染
-                    var MarkdownIt = require("markdown-it")
-                    var md = new MarkdownIt()
-                    _this.blog = res.data.data
-                    var content = md.render(res.data.data.content)
-                    _this.blog.content = content
-                    _this.imgUrl = res.data.data.picture
+                    var MarkdownIt = require("markdown-it");
+                    var md = new MarkdownIt();
+                    _this.blog = res.data.data;
+                    var content = md.render(res.data.data.content);
+                    _this.blog.content = content;
+                    _this.imgUrl = res.data.data.picture;
 
                     document.title = _this.blog.title
                 })
             },
+            getComment() {
+                var _this = this;
+                getAllCommentByBlogId(_this.id).then(res=>{
+                    _this.comments =res.data.data;
+                })
+            },
+
             //监听目录  固定位置
             handleScroll() {
-                var _this = this
-                var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                var _this = this;
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
                 // 400
                 if (scrollTop > 360) {
                     _this.catalog_show = true
@@ -144,14 +157,17 @@
                     _this.catalog_show = false
                 }
             },
-            getComment() {
-            }
+
         },
         mounted() {
             var _this = this;
+            _this.id = this.$route.params.id;
             setTimeout(() => {
                 _this.getAticle();
-            }, 500)
+                _this.getComment();
+            }, 500);
+            console.log(_this.comments)
+
             window.addEventListener('scroll', this.handleScroll)
         },
         destroyed() {

@@ -36,6 +36,12 @@ export const getTags = (data) => {
     return http.get(urls.getTags,data);
 }
 
+
+//评论
+export const getAllCommentByBlogId = (id) => {
+    return http.get(urls.getAllCommentByBlogId+ id);
+}
+
 //认证
 export const githubOAuth = () => {
     return http.get(urls.GithubOAuth);
