@@ -26,9 +26,9 @@
             <div class="iconBox">
                 <a @click="githubOAuth" v-if="! userInfo"><i class="iconfont icon-user"></i></a>
                 <div class="menu-item hasChild" v-if="userInfo" >
-                    <img :src="userInfo.avatar"><span>{{userInfo.nickname}}</span>
+                    <img :src="userInfo.avatar"><span>{{userInfo.username}}</span>
                     <div class="childMenu" >
-                        <div class="sub-menu" ><a>退出</a></div>
+                        <div class="sub-menu" ><a @click="logout">退出</a></div>
                     </div>
                 </div>
 
@@ -120,6 +120,13 @@
                 _this.$store.commit(types.USER_INFO,e.data);
                 _this.userInfo = _this.$store.getters.userInfo;
                 window.removeEventListener('message',this.loginGithubHandler,false);
+            },
+            logout(){
+                if(confirm("确定退出？")){
+                    var _this = this;
+                    _this.$store.commit(types.CLEAR_TOKEN);
+                    _this.userInfo = _this.$store.getters.userInfo;
+                }
             }
 
 

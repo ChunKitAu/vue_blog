@@ -19,6 +19,11 @@ const  mutations = {
         state.userInfo = v;
         localStorage.setItem("userInfo",v);
     },
+    [types.CLEAR_TOKEN](state){
+        state.userInfo = "";
+        localStorage.setItem("userInfo",'');
+        localStorage.setItem("Authorization",'');
+    },
 }
 
 const actions = {
