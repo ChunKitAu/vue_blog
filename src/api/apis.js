@@ -41,6 +41,9 @@ export const getTags = (data) => {
 export const getAllCommentByBlogId = (id) => {
     return http.get(urls.getAllCommentByBlogId+ id);
 }
+export const postComment = (data) => {
+    return http.post(urls.postComment,data);
+}
 
 //认证
 export const githubOAuth = () => {

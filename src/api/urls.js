@@ -23,7 +23,9 @@ export const urls = {
     GithubOAuth:'/oauth/authorize',
 
     //根据文章id获取所有评论
-    getAllCommentByBlogId:'comment/blog/',
+    getAllCommentByBlogId:'/comment/blog/',
+    //添加评论
+    postComment:"/comment"
 
 
 }

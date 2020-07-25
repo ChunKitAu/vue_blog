@@ -1,12 +1,12 @@
 <template>
     <li class='comment' :class="{'child':isChild}">
         <div class='commentinfo flex-items'>
-            <img src="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture" alt=""/>
+            <img :src="comment.avatar===''?'https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture':comment.avatar" alt=""/>
             <div class='commeta cell'>
                 <h2>{{comment.userName}} <span v-if="comment.parentUserName">| @{{comment.parentUserName}} </span></h2>
                 <h3>{{comment.createTime}}</h3>
             </div>
-            <span class='comment-reply-link'>Reply</span>
+            <a @click="setValue(comment.userName,comment.id)" class='comment-reply-link'>Reply</a>
         </div>
         <div class='body'>
             <p> {{comment.content}}</p>
@@ -25,6 +25,14 @@
             isChild:{
                 type: Boolean,
                 default:false,
+            },
+        },
+        methods:{
+            setValue(parentUserName,parentCommentId){
+                this.$emit('changeCommentValue',{
+                    parentUserName : parentUserName,
+                    parentCommentId : parentCommentId,
+                });
             }
         }
     }

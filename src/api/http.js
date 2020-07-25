@@ -9,8 +9,8 @@ let success =200;
 
 class HttpRequest {
     constructor() {
-        this.baseURL = 'http://120.25.237.83:8086/blog';
-        // this.baseURL = 'http://localhost:8086/blog';
+        // this.baseURL = 'http://120.25.237.83:8086/blog';
+        this.baseURL = 'http://localhost:8086/blog';
         this.instance = axios.create();
         this.interceptor();
     }
@@ -27,7 +27,15 @@ class HttpRequest {
     interceptor() {
         // 请求拦截器
         this.instance.interceptors.request.use(config => {
-            // do something
+            //若为添加评论  添加token
+            if (config.url === HttpRequest.POST_COMMENT ) {
+                const token = Vue.$store.getters.token;
+                if (token) {
+                    config.headers['Authorization'] = token;
+                } else {
+                    alert("请先进行登录");
+                }
+            }
             return config;
         }, error => {
             // do something
@@ -36,19 +44,13 @@ class HttpRequest {
 
         // 响应拦截器
         this.instance.interceptors.response.use(response => {
-            switch (response.data.code) {
-                case success:
-                    return response;
-                    break;
-                case 530:
-                    router.push({
-                        path: "/404"
-                    });
-                    return Promise.reject();
-                    break;
-            }
+            if(response.data.code === success){
+                return response;
+            }else return Promise.reject();
+
         }, error => {
             // do something
+            alert("发生了一些错误！请重试");
             return Promise.reject(error);
         })
     }
@@ -122,7 +124,6 @@ class HttpRequest {
 
 }
 
-HttpRequest.LOGIN = "/user/login";
-HttpRequest.REGISTER = "/user/save";
+HttpRequest.POST_COMMENT = "/comment";
 
 export default HttpRequest;

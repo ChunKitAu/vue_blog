@@ -25,7 +25,13 @@
 
             <div class="iconBox">
                 <a @click="githubOAuth" v-if="! userInfo"><i class="iconfont icon-user"></i></a>
-                <img v-if="userInfo" :src="userInfo.avatar_url">
+                <div class="menu-item hasChild" v-if="userInfo" >
+                    <img :src="userInfo.avatar"><span>{{userInfo.nickname}}</span>
+                    <div class="childMenu" >
+                        <div class="sub-menu" ><a>退出</a></div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -35,6 +41,7 @@
     import SideMenu from "@/components/header_side_menu";
     import openWindow from "../../../utils/openWindow";
     import {githubOAuth,getTypes} from '@/api/apis'
+    import types from "../../../store/types";
 
     export default {
         name: "layout-header",
@@ -49,14 +56,14 @@
                 hidden: false,
                 top:false,
                 category: [],
-                userInfo:[],
+                userInfo:'',
             }
         },
         mounted(){
             var _this = this;
             window.addEventListener('scroll', _this.watchScroll)
             _this.userInfo = _this.$store.getters.userInfo;
-            _this.getCategorys()
+            _this.getCategorys();
 
             //监听打开侧边菜单  点击其它div消失
             document.addEventListener('click',ev => {
@@ -81,28 +88,22 @@
                     this.hidden = true;
                     this.top = false;
                 } else {
-                    this.fixed = true
-                    this.hidden = false
+                    this.fixed = true;;
+                    this.hidden = false;
                     this.top = false;
                 }
                 this.lastScrollTop = scrollTop
             },
             getCategorys() {
                 var _this = this;
-                getTypes("/type/list").then(
-                    function (response) {
-                        _this.category = response.data.data
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                getTypes("/type/list").then(res=>{
+                    _this.category = res.data.data
+                })
             },
 
             changeOpen(){
                 var _this = this;
                 _this.open = ! _this.open;
-                console.log(_this.open)
             },
 
             githubOAuth(){
@@ -114,11 +115,11 @@
 
             },
             loginGithubHandler(e) {
-                console.log(e.data);
                 var _this = this;
-                _this.$store.commit('SET_UserInfo', e.data);
+                _this.$store.commit(types.TOKEN, e.data.token);
+                _this.$store.commit(types.USER_INFO,e.data);
                 _this.userInfo = _this.$store.getters.userInfo;
-                window.removeEventListener('message',this.loginGithubHandler,false)
+                window.removeEventListener('message',this.loginGithubHandler,false);
             }
 
 
@@ -213,6 +214,11 @@
                     border-bottom-width: 4px;
                     border-bottom-color: rgb(254, 150, 0);
                 }
+            }
+            img{
+                margin-top: 15px;
+                width: 30px !important;
+                height: 30px !important;
             }
             &:not(:last-child) {
                 margin-right: 15px;

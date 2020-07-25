@@ -50,14 +50,13 @@
                     <h3 class='comments-list-title'>Comments | <span class="noticom">评论 </span></h3>
                     <div>
                         <ul class='commentwrap' v-for="item in this.comments">
-                            <Comment :comment="item"></Comment>
+                            <Comment :comment="item" @changeCommentValue="getCommentValue"></Comment>
                             <template v-if="item.childComment">
-                                <comment v-for="child in item.childComment"  :comment="child" :isChild="true"></comment>
+                                <comment v-for="child in item.childComment"  :comment="child" :isChild="true" @changeCommentValue="getCommentValue"></comment>
                             </template>
                         </ul>
-
                     </div>
-                    <div class="CommentTextarea">
+                    <div class="CommentTextarea" v-if="blog.commentabled" >
                         <!--输入框-->
                         <textarea
                                 placeholder="你是我一生只会遇见一次的惊喜 ..."
@@ -65,25 +64,16 @@
                                 class="commentbody"
                                 id="comment"
                                 rows="5" tabIndex="4"
-                                value={this.state.value}
-                                onChange={}
+                                v-model="commentValue"
                         />
                         <!--提交按钮-->
                         <div class='form-submit'>
-                            <input
-                                    onClick={}
-                                    name="submit"
-                                    type="submit"
-                                    id="submit"
-                                    class="submit"
-                                    value="BiuBiuBiu~"
+                            <input type="submit" class="submit" value="BiuBiuBiu~"
+                                    @click="postComment"
                             />
                         </div>
-
-                        <p v-if="!blog.commentabled" class='text'>此处评论已关闭</p>
                     </div>
-
-
+                    <p v-if="!blog.commentabled" class='text'>此处评论已关闭</p>
                 </div>
             </div>
         </div>
@@ -91,7 +81,7 @@
 </template>
 
 <script>
-    import {getArticleById,getAllCommentByBlogId} from "@/api/apis";
+    import {getArticleById,getAllCommentByBlogId,postComment} from "@/api/apis";
     import Banner from '@/components/banner'
     import ArticleButtom from '@/components/ariticle/article_buttom'
     import Comment from "@/components/comment";
@@ -108,6 +98,8 @@
                 comments: [],
                 imgUrl: "",
                 catalog_show: false,
+                commentValue:'',
+                parentCommentId:'',
                 catalogProps: {
                     container: "#blog_content",
                     watch: true,
@@ -146,6 +138,35 @@
                 })
             },
 
+            getCommentValue(val){
+                var _this =this;
+                _this.commentValue = '@'+val.parentUserName+':';
+                _this.parentCommentId = val.parentCommentId;
+            },
+
+            postComment(){
+                var _this = this;
+                if(this.$store.getters.token){
+                    var content ;
+                    if(_this.parentCommentId === ''){
+                        content = _this.commentValue;
+                    }else {
+                        var s =  _this.commentValue.split(':');
+                        content = s[1];
+                    }
+                    postComment({
+                        parentCommentId:_this.parentCommentId === ''? 0 :_this.parentCommentId,
+                        content:content,
+                        blogId:_this.id,
+                    }).then(res =>{
+                        _this.getComment();
+                    });
+                }else {
+                    alert("请先登陆!");
+                }
+
+            },
+
             //监听目录  固定位置
             handleScroll() {
                 var _this = this;
@@ -166,7 +187,6 @@
                 _this.getAticle();
                 _this.getComment();
             }, 500);
-            console.log(_this.comments)
 
             window.addEventListener('scroll', this.handleScroll)
         },

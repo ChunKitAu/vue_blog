@@ -18,7 +18,7 @@
         name: "loading",
         computed: {
             loading() {
-                return this.$store.state.loading
+                return this.$store.getters.loading
             }
         },
         watch: {
