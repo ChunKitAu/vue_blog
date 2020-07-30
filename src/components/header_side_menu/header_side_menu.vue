@@ -1,7 +1,7 @@
 <template>
     <div class="sideMenu " @click.stop>
         <div class="m-avatar">
-            <img alt="" src="https://cos.nosum.cn/nosum/blog/other/a51eb755-60db-49de-8a23-5320dcbf0eae.png">
+            <img alt="" src="https://avatars2.githubusercontent.com/u/49512581?s=60&v=4">
         </div>
         <p class="name ellipsis">ChunKit.Au</p>
         <p class="info ellipsis">Tomorrow may be cruel, but, I want see</p>

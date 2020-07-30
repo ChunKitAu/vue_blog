@@ -3,8 +3,8 @@
         <banner :message="toBannerMessage"></banner>
         <div class="site-content animate">
             <div class="page-header">
-                <h1 class="page-title" v-if="toBannerMessage">" {{toBannerMessage}} "相关文章</h1>
-                <h1 class="page-title" v-else-if="searchValue" >" {{searchValue}} "搜索结果</h1>
+                <h1 class="page-title" v-if="searchValue" >" {{searchValue}} "搜索结果:</h1>
+                <h1 class="page-title" v-else-if="toBannerMessage">" {{toBannerMessage}} "相关文章:</h1>
             </div>
             <!--文章列表-->
             <main class="site-main" >
@@ -28,7 +28,6 @@
 <script>
     import Banner from '@/components/banner'
     import AriticleList from'@/components/ariticle/article_list'
-
     import {getTypeById,getTypeListById,getTagById,getTagListById,getSearchList} from '@/api/apis'
 
     export default {
@@ -73,12 +72,21 @@
             getCategoryList(categoryId) {
                 var _this = this;
                 getTypeListById(categoryId,{ page:_this.currPage,size:10}).then(res=>{
-                        _this.ariticleList = res.data.data;
+                    if(res.data.data){
+                        if(_this.currPage === 1){
+                            _this.ariticleList = res.data.data;
+                        }else{
+                            res.data.data.forEach((item,index)=>{
+                                _this.ariticleList.push(item)
+                            });
+                        };
+
                         if(_this.currPage < res.data.data[0].totalPage)
                             _this.hasNextPage = true;
                         else
                             _this.hasNextPage = false
-                    })
+                    }
+                })
             },
             //获取当前标签的信息
             getTagName(tagId){
@@ -91,14 +99,22 @@
             getTagList(tagId){
                 var _this = this;
                 getTagListById(tagId,{ page:_this.currPage,size:10}).then(res=>{
-                    _this.ariticleList = res.data.data;
-                    if(_this.currPage < res.data.data[0].totalPage)
-                        _this.hasNextPage = true
-                    else
-                        _this.hasNextPage = false
+                    if(res.data.data){
+                        if(_this.currPage === 1){
+                            _this.ariticleList = res.data.data;
+                        }else{
+                            res.data.data.forEach((item,index)=>{
+                                _this.ariticleList.push(item)
+                            });
+                        };
+                        if(_this.currPage < res.data.data[0].totalPage)
+                            _this.hasNextPage = true
+                        else
+                            _this.hasNextPage = false
+                    }
                 })
             },
-
+            //获取搜索结果
             getSearchLists(searchValue){
                 var _this = this;
                 getSearchList({
@@ -106,13 +122,19 @@
                     size:10,
                     keyWord:searchValue
                 }).then(res=>{
-                    _this.ariticleList = res.data.data.content;
-
-                    if(_this.currPage < res.data.data.totalPages)
-                        _this.hasNextPage = true
-                    else
-                        _this.hasNextPage = false
-
+                    if(res.data.data.content){
+                        if(_this.currPage === 1){
+                            _this.ariticleList = res.data.data.content;
+                        }else{
+                            res.data.data.content.forEach((item,index)=>{
+                                _this.ariticleList.push(item)
+                            });
+                        };
+                        if(_this.currPage < res.data.data.totalPages)
+                            _this.hasNextPage = true;
+                        else
+                            _this.hasNextPage = false;
+                    }
                 });
             },
 
@@ -121,49 +143,18 @@
                 var _this = this;
                 _this.currPage = _this.currPage + 1;
                 if(_this.getTagId){
-                    getTagListById(_this.getTagId,{
-                        page:_this.currPage,
-                        size:10
-                    }).then(res=>{
-                        res.data.data.forEach((item,index)=>{
-                            _this.ariticleList.push(item)
-                        });
-                        if(_this.currPage < res.data.data[0].totalPage)
-                            _this.hasNextPage = true;
-                        else
-                            _this.hasNextPage = false;
-                    })
+                    _this.getTagList(_this.getTagId);
                 }else if(_this.getCategory) {
-                    getTypeListById(_this.getCategory,{
-                        page:_this.currPage,
-                        size:10
-                    }).then(res=>{
-                        res.data.data.forEach((item,index)=>{
-                            _this.ariticleList.push(item)
-                        });
-                        if(_this.currPage < res.data.data[0].totalPage)
-                            _this.hasNextPage = true;
-                        else
-                            _this.hasNextPage = false;
-                    })
+                    _this.getCategoryList(_this.getCategory);
                 }else if(_this.getSearchWords){
-                    getSearchList({
-                        current:_this.currPage,
-                        size:10,
-                        keyWord:_this.searchValue
-                    }).then(res=>{
-                        res.data.data.content.forEach((item,index)=>{
-                            _this.ariticleList.push(item)
-                        });
-                        if(_this.currPage < res.data.data.totalPages)
-                            _this.hasNextPage = true;
-                        else
-                            _this.hasNextPage = false;
-                    });
+                    _this.getSearchWords(_this.getSearchWords);
                 }
             },
+
+            //初始化数据
             initData(){
                 var _this = this;
+                _this.searchValue = "";
                 if(_this.getTagId){
                     _this.getTagList(_this.getTagId);
                     _this.getTagName(_this.getTagId);
