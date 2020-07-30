@@ -6,11 +6,14 @@ import router from "../router";
 //认证失败
 let token_confrim_fail = 520;
 let success =200;
+// let blogUrl =  'http://localhost:8086/blog';
+let blogUrl =  'http://120.25.237.83:8086/blog';
+let searchUrl = 'http://localhost:8087';
+
 
 class HttpRequest {
     constructor() {
-        // this.baseURL = 'http://120.25.237.83:8086/blog';
-        this.baseURL = 'http://localhost:8086/blog';
+        // this.baseURL = blogUrl
         this.instance = axios.create();
         this.interceptor();
     }
@@ -27,6 +30,10 @@ class HttpRequest {
     interceptor() {
         // 请求拦截器
         this.instance.interceptors.request.use(config => {
+            if(config.url === HttpRequest.SEARCH){
+                config.baseURL = searchUrl;
+            }else config.baseURL = blogUrl;
+
             //若为添加评论  添加token
             if (config.url === HttpRequest.POST_COMMENT ) {
                 const token = Vue.$store.getters.token;
@@ -46,9 +53,11 @@ class HttpRequest {
         this.instance.interceptors.response.use(response => {
             if(response.data.code === success){
                 return response;
-            }else return Promise.reject();
+            }
+            return Promise.reject();
 
         }, error => {
+            console.log(error)
             // do something
             alert("发生了一些错误！请重试");
             return Promise.reject(error);
@@ -125,5 +134,5 @@ class HttpRequest {
 }
 
 HttpRequest.POST_COMMENT = "/comment";
-
+HttpRequest.SEARCH = '/search';
 export default HttpRequest;

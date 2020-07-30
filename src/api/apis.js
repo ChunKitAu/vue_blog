@@ -50,4 +50,9 @@ export const githubOAuth = () => {
     return http.get(urls.GithubOAuth);
 }
 
+//搜索
+export const getSearchList = (data) => {
+    return http.get(urls.getSearchList,data);
+}
+
 

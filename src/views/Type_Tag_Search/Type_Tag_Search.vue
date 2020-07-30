@@ -3,7 +3,8 @@
         <banner :message="toBannerMessage"></banner>
         <div class="site-content animate">
             <div class="page-header">
-                <h1 class="page-title">" {{toBannerMessage}} "相关文章</h1>
+                <h1 class="page-title" v-if="toBannerMessage">" {{toBannerMessage}} "相关文章</h1>
+                <h1 class="page-title" v-else-if="searchValue" >" {{searchValue}} "搜索结果</h1>
             </div>
             <!--文章列表-->
             <main class="site-main" >
@@ -28,7 +29,7 @@
     import Banner from '@/components/banner'
     import AriticleList from'@/components/ariticle/article_list'
 
-    import {getTypeById,getTypeListById,getTagById,getTagListById} from '@/api/apis'
+    import {getTypeById,getTypeListById,getTagById,getTagListById,getSearchList} from '@/api/apis'
 
     export default {
         name: 'Category',
@@ -37,14 +38,12 @@
                 toBannerMessage:'',
                 categoryName:'',
                 tagName:'',
-                features: [],
                 ariticleList: [],
                 currPage: 1,
                 hasNextPage: false,
-
                 tgaId:'',
                 typeId:'',
-                searchWords:"",
+                searchValue:"",
             }
         },
         components: {
@@ -53,7 +52,7 @@
         },
         computed: {
             getSearchWords() {
-                return this.$route.params.words
+                return this.$route.params.searchValue
             },
             getCategory() {
                 return this.$route.params.cate
@@ -92,67 +91,78 @@
             getTagList(tagId){
                 var _this = this;
                 getTagListById(tagId,{ page:_this.currPage,size:10}).then(res=>{
-                    _this.ariticleList = res.data.data
+                    _this.ariticleList = res.data.data;
                     if(_this.currPage < res.data.data[0].totalPage)
                         _this.hasNextPage = true
                     else
                         _this.hasNextPage = false
                 })
             },
+
+            getSearchLists(searchValue){
+                var _this = this;
+                getSearchList({
+                    current:_this.currPage,
+                    size:10,
+                    keyWord:searchValue
+                }).then(res=>{
+                    _this.ariticleList = res.data.data.content;
+
+                    if(_this.currPage < res.data.data.totalPages)
+                        _this.hasNextPage = true
+                    else
+                        _this.hasNextPage = false
+
+                });
+            },
+
             //加载更多
             loadMore() {
                 var _this = this;
                 _this.currPage = _this.currPage + 1;
                 if(_this.getTagId){
                     getTagListById(_this.getTagId,{
-                        page:_this.currPage,size:10
+                        page:_this.currPage,
+                        size:10
                     }).then(res=>{
                         res.data.data.forEach((item,index)=>{
-                            _this.ariticleList
-                                .push(item)
+                            _this.ariticleList.push(item)
                         });
                         if(_this.currPage < res.data.data[0].totalPage)
-                            _this.hasNextPage = true
+                            _this.hasNextPage = true;
                         else
-                            _this.hasNextPage = false
+                            _this.hasNextPage = false;
                     })
                 }else if(_this.getCategory) {
                     getTypeListById(_this.getCategory,{
-                        page:_this.currPage,size:10
+                        page:_this.currPage,
+                        size:10
                     }).then(res=>{
                         res.data.data.forEach((item,index)=>{
-                            _this.ariticleList
-                                .push(item)
+                            _this.ariticleList.push(item)
                         });
                         if(_this.currPage < res.data.data[0].totalPage)
-                            _this.hasNextPage = true
+                            _this.hasNextPage = true;
                         else
-                            _this.hasNextPage = false
+                            _this.hasNextPage = false;
                     })
+                }else if(_this.getSearchWords){
+                    getSearchList({
+                        current:_this.currPage,
+                        size:10,
+                        keyWord:_this.searchValue
+                    }).then(res=>{
+                        res.data.data.content.forEach((item,index)=>{
+                            _this.ariticleList.push(item)
+                        });
+                        if(_this.currPage < res.data.data.totalPages)
+                            _this.hasNextPage = true;
+                        else
+                            _this.hasNextPage = false;
+                    });
                 }
-            }
-        },
-        mounted() {
-            var _this = this;
-            if(_this.getTagId){
-                _this.getTagList(_this.getTagId);
-                _this.getTagName(_this.getTagId);
-                setTimeout(() => {
-                    document.title = '标签：'+_this.tagName;
-                    _this.toBannerMessage = _this.tagName;
-                },300)
-            }else if(_this.getCategory){
-                _this.getCategoryList(_this.getCategory);
-                _this.getCategoryName(_this.getCategory);
-                setTimeout(() => {
-                    document.title = '分类：'+_this.categoryName;
-                    _this.toBannerMessage = _this.categoryName;
-                },300)
-            }
-        },
-        watch:{
-            //监听相同路由下参数变化的时候，从而实现异步刷新
-            "$route": function(){
+            },
+            initData(){
                 var _this = this;
                 if(_this.getTagId){
                     _this.getTagList(_this.getTagId);
@@ -168,7 +178,23 @@
                         document.title = '分类：'+_this.categoryName;
                         _this.toBannerMessage = _this.categoryName;
                     },300)
+                }else if(_this.getSearchWords){
+                    _this.searchValue =_this.getSearchWords;
+                    _this.getSearchLists(_this.getSearchWords);
+                    setTimeout(() => {
+                        document.title = '搜索：'+_this.searchValue;
+                        _this.toBannerMessage = _this.searchValue;
+                    },300)
                 }
+            }
+        },
+        mounted() {
+            this.initData();
+        },
+        watch:{
+            //监听相同路由下参数变化的时候，从而实现异步刷新
+            "$route": function(){
+                this.initData();
             }
         }
     }

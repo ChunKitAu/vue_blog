@@ -11,8 +11,10 @@
                 <h1>ChunKit.Au</h1>
             </router-link>
         </div>
+
         <div class="site-menus">
 <!--            <div class="menu-item header-search"><header-search/></div>-->
+            <div class="menu-item header-search" > <HeaderSearch></HeaderSearch></div>
             <div class="menu-item"><router-link to="/"><i class="iconfont icon-fort-awesome"></i> 首页</router-link></div>
             <div class="menu-item hasChild">
                 <a href="#"><i class="iconfont icon-caidan2"></i>分类</a>
@@ -39,6 +41,7 @@
 
 <script>
     import SideMenu from "@/components/header_side_menu";
+    import HeaderSearch from "../../header_search/header_search";
     import openWindow from "../../../utils/openWindow";
     import {githubOAuth,getTypes} from '@/api/apis'
     import types from "../../../store/types";
@@ -46,7 +49,7 @@
     export default {
         name: "layout-header",
         components: {
-            SideMenu,
+            SideMenu,HeaderSearch,
         },
         data() {
             return {

@@ -4,70 +4,76 @@ import store from '@/store'
 
 Vue.use(VueRouter)
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: () => import('../views/Home/Home.vue'),
-    meta: { title: '首页'}
-  },
-  {
-    path: '/article/:id',
-    name: 'Article',
-    component: () => import('../views/Article/Article.vue'),
-    meta: { title: '文章'}
-  },
+const routes = [
     {
-      path: '/category/:cate',
-      name: 'Category',
-      component: () => import('../views/Type_Tag_Search/Type_Tag_Search.vue'),
-      meta: { title: '分类', params: 'cate'}
+        path: '/',
+        name: 'Home',
+        component: () => import('../views/Home/Home.vue'),
+        meta: {title: '首页'}
     },
     {
-      path: '/tags',
-      name: 'tags',
-      component: () => import('../views/Tags/Tags.vue'),
-      meta: { title: '分类'}
+        path: '/article/:id',
+        name: 'Article',
+        component: () => import('../views/Article/Article.vue'),
+        meta: {title: '文章'}
     },
     {
-      path: '/tag/:tagId',
-      name: 'Tag',
-      component: () => import('../views/Type_Tag_Search/Type_Tag_Search.vue'),
-      meta: { title: '标签', params: 'tagId'}
+        path: '/category/:cate',
+        name: 'Category',
+        component: () => import('../views/Type_Tag_Search/Type_Tag_Search.vue'),
+        meta: {title: '分类', params: 'cate'}
     },
     {
-      path:'/404',
-      name:'NotFound',
-      component:()=> import('../components/error/404'),
-      meta:{title:'Not Found'}
+        path: '/search/:searchValue',
+        name: 'Search',
+        component: () => import('../views/Type_Tag_Search/Type_Tag_Search.vue'),
+        meta: {title: '搜索', params: 'searchValue'}
     },
     {
-      path:"*",
-      redirect:"/404",
+        path: '/tags',
+        name: 'tags',
+        component: () => import('../views/Tags/Tags.vue'),
+        meta: {title: '分类'}
+    },
+    {
+        path: '/tag/:tagId',
+        name: 'Tag',
+        component: () => import('../views/Type_Tag_Search/Type_Tag_Search.vue'),
+        meta: {title: '标签', params: 'tagId'}
+    },
+    {
+        path: '/404',
+        name: 'NotFound',
+        component: () => import('../components/error/404'),
+        meta: {title: 'Not Found'}
+    },
+    {
+        path: "*",
+        redirect: "/404",
     },
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 //设置loading 和title
 router.beforeEach((to, from, next) => {
-  let title = 'MyBlog'
-  if (to.meta.params){
-    title = `${to.meta.title}:${to.params[to.meta.params] || ''} - ${title}`
-  }else {
-    title = `${to.meta.title} - ${title}`
-  }
-  document.title = title
-  store.dispatch('setLoading', true);
-  next();
+    let title = 'MyBlog'
+    if (to.meta.params) {
+        title = `${to.meta.title}:${to.params[to.meta.params] || ''} - ${title}`
+    } else {
+        title = `${to.meta.title} - ${title}`
+    }
+    document.title = title
+    store.dispatch('setLoading', true);
+    next();
 })
 router.afterEach((to, from) => {
-  // 最多延迟 关闭 loading
-  setTimeout(() => {
-    store.dispatch('setLoading', false);
-  }, 1500)
+    // 最多延迟 关闭 loading
+    setTimeout(() => {
+        store.dispatch('setLoading', false);
+    }, 1500)
 })
 export default router

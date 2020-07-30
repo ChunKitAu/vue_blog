@@ -25,7 +25,10 @@ export const urls = {
     //根据文章id获取所有评论
     getAllCommentByBlogId:'/comment/blog/',
     //添加评论
-    postComment:"/comment"
+    postComment:"/comment",
+
+    //搜索
+    getSearchList:"/search",
 
 
 }
