@@ -209,7 +209,6 @@
     }
 
     .site-main {
-        padding-top: 80px;
 
         &.search {
             padding-top: 0;
@@ -261,7 +260,7 @@
         }
 
         .site-main {
-            padding-top: 40px;
+            padding-top: 20px;
         }
 
     }

@@ -1,22 +1,33 @@
 <template>
-    <div class="home">
+    <div class="HomeWrapper">
         <HomeBanner></HomeBanner>
-        <div class="site-content animate">
-            <!--文章列表-->
-            <main class="site-main" id="blog_list">
-<!--                      <section-title v-if="!hideSlogan">推荐</section-title>-->
-                <template v-for="(item,index) in ArticleList">
-                    <HoneArticleList :post="item" :index="index"></HoneArticleList>
-                </template>
-            </main>
-        </div>
-        <!--加载更多-->
+        <div class="MainWrapper " id="content">
+            <div class="FeatureWrapper">
+                <div class="FeatureTitle" id="hook">
+                    <h1><i class='iconfont icon-anchor'/><span> START:DASH!!</span></h1>
+                </div>
+                <Feature :data="recommentArticle"></Feature>
+            </div>
 
-        <div class="more" v-show="hasNextPage">
-            <div class="more-btn" @click="loadMore">More</div>
-        </div>
-        <div class="no_more" v-show="!hasNextPage">
-            <div>没有了</div>
+            <div class="HomeList" >
+                <div class="FeatureTitle">
+                    <h1><i class='iconfont icon-envira'/><span> Discovery:</span></h1>
+                </div>
+                <!--文章列表-->
+                <main  id="blog_list">
+                    <template v-for="(item,index) in ArticleList">
+                        <HoneArticleList :post="item" :index="index"></HoneArticleList>
+                    </template>
+                </main>
+
+                <!--加载更多-->
+                <div class="more" v-show="hasNextPage">
+                    <div class="more-btn" @click="loadMore">More</div>
+                </div>
+                <div class="no_more" v-show="!hasNextPage">
+                    <div>没有了</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -24,12 +35,14 @@
 <script>
     import HomeBanner from '@/components/home/home_banner'
     import HoneArticleList from "@/components/home/home_article_list";
-    import {getArticles} from "@/api/apis";
+    import Feature from "../../components/home/Feature/Feature";
+    import {getArticles, getRecommendArticle} from "@/api/apis";
 
     export default {
         name: 'Home',
         data() {
             return {
+                recommentArticle: [],
                 ArticleList: [],
                 currPage: 1,
                 hasNextPage: false
@@ -37,7 +50,8 @@
         },
         components: {
             HomeBanner,
-            HoneArticleList
+            HoneArticleList,
+            Feature
         },
         methods: {
             fetchList() {
@@ -45,12 +59,19 @@
                 getArticles({
                     page: _this.currPage,
                     size: 10
-                }).then(res=>{
+                }).then(res => {
                     _this.ArticleList = res.data.data
                     if (_this.currPage < res.data.data[0].totalPage)
                         _this.hasNextPage = true
                     else
                         _this.hasNextPage = false
+                })
+            },
+
+            getRecommendArticles() {
+
+                getRecommendArticle().then(res => {
+                    this.recommentArticle = res.data.data;
                 })
             },
             loadMore() {
@@ -59,7 +80,7 @@
                 getArticles({
                     page: _this.currPage,
                     size: 10
-                }).then(res=>{
+                }).then(res => {
                     res.data.data.forEach((item, index) => {
                         _this.ArticleList.push(item)
                     })
@@ -73,35 +94,38 @@
         mounted() {
             // this.fetchFocus();
             this.fetchList();
+            this.getRecommendArticles();
         }
 
     }
 </script>
 
 <style scoped lang="less">
-    .top-feature {
-        width: 100%;
-        height: auto;
-        margin-top: 30px;
-
-        .feature-content {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-
-            .feature-item {
-                width: 32.9%;
+    .MainWrapper{
+        width:100%;
+        max-width: 900px;
+        padding: 0 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: rgba(255,255,255,.8);
+        animation: main 1s;
+        @keyframes main {
+            0% {
+                opacity: 0;
+                transform: translateY(50px)
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0)
             }
         }
     }
+    .HomeList{
+        width: 100%;
+    }
 
-    .site-main {
-        padding-top: 80px;
-
-        &.search {
-            padding-top: 0;
-        }
+    .HomeWrapper {
+        width: 100%;
     }
 
     .more {
@@ -125,15 +149,15 @@
         }
     }
 
-
-    .no_more{
+    .no_more {
         display: block;
         height: 1px;
         width: 100%;
         margin: 24px 0;
         background-color: #dcdfe6;
         position: relative;
-        div{
+
+        div {
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
             position: absolute;
@@ -158,4 +182,42 @@
     }
 
     /******/
+
+
+    .FeatureWrapper {
+        width: 100%;
+        height: auto;
+
+        @media (max-width: 768px) {
+            display: none;
+        }
+
+
+    }
+
+    .FeatureTitle {
+        width: 100%;
+        height: auto;
+        margin-top: 55px;
+        display: inline-block;
+
+        h1 {
+            color: #666;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            line-height: 24px;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed #ececec;
+        }
+
+        @media ( max-width: 768px ) {
+            margin-top: 15px;
+            h1 {
+                margin-bottom: 15px;
+            }
+        }
+    }
+
 </style>

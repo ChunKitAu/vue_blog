@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="menu-item"><router-link to="/tags"><i class="iconfont icon-biaoqian1"></i>标签墙</router-link></div>
-            <div class="menu-item"><router-link to="/about"><i class="iconfont icon-biaoqian2"></i>关于</router-link></div>
+<!--            <div class="menu-item"><router-link to="/about"><i class="iconfont icon-biaoqian2"></i>关于</router-link></div>-->
 
             <div class="iconBox">
                 <a @click="githubOAuth" v-if="! userInfo"><i class="iconfont icon-user"></i></a>

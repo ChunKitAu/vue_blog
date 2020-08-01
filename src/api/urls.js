@@ -3,6 +3,8 @@ export const urls = {
     getArticles: "/article/list",
     //根据id获取文章
     getArticleById:'/article/',
+    //获取推荐文章
+    getRecommendArticle:'/article/recommend/list',
 
 
     //获取分类的信息

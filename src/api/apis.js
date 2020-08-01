@@ -10,6 +10,10 @@ export const getArticles = (data) => {
 export const getArticleById = (id) => {
     return http.get(urls.getArticleById + id);
 }
+export const getRecommendArticle = () => {
+    return http.get(urls.getRecommendArticle );
+}
+
 
 
 //分类

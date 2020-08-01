@@ -85,7 +85,7 @@
         methods: {
             //跳转到文章列表处
             headertop_down() {
-                const content = document.getElementById('blog_list').offsetTop;
+                const content = document.getElementById('hook').offsetTop;
                 this.scrollAnimation(0, content);
             },
             //跳转
