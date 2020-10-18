@@ -56,7 +56,7 @@ const routes = [
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes,
 })
 //设置loading 和title
 router.beforeEach((to, from, next) => {
@@ -75,5 +75,6 @@ router.afterEach((to, from) => {
     setTimeout(() => {
         store.dispatch('setLoading', false);
     }, 1500)
+    window.scrollTo(0, 0)
 })
 export default router

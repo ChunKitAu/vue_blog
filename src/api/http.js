@@ -6,9 +6,9 @@ import router from "../router";
 //认证失败
 let token_confrim_fail = 520;
 let success =200;
-let blogUrl =  'http://localhost:8086/blog';
+// let blogUrl =  'http://localhost:8086/blog';
 // let searchUrl =  'http://localhost:8087';
-// let blogUrl =  'http://120.25.237.83:8086/blog';
+let blogUrl =  'http://120.25.237.83:8086/blog';
 let searchUrl = 'http://120.25.237.83:8087';
 
 

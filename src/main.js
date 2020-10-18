@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 
 //时间格式化
-import {parseTime} from './utils'
+import {parseTime} from './utils/parseTime'
 Vue.filter('parseTime', (v) => parseTime(v,'{y}-{m}-{d}'))
 
 
