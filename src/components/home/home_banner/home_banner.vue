@@ -489,7 +489,6 @@
             color: #eaeadf;
             background: rgba(0, 0, 0, .5);
             padding: 15px;
-            margin-top: 22px;
             letter-spacing: 0;
             line-height: 30px;
             border-radius: 10px;

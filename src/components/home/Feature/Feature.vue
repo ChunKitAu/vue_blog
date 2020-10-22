@@ -39,12 +39,12 @@
             border-radius: 10px;
 
             box-sizing: border-box;
-            width: 33.33333333%;
+            width: 32.5%;
             flex: 0 0 auto;
             float: left;
 
-            margin-left: 8px;
-            margin-right: 8px;
+            margin-left: 4px;
+            margin-right: 4px;
             a {
                 display: block;
                 height: 100%;

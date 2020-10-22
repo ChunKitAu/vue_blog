@@ -1,7 +1,7 @@
 <template>
     <div class="HomeWrapper">
         <HomeBanner></HomeBanner>
-        <div class="MainWrapper " id="content">
+        <div class="MainWrapper my-box-shadow" id="content">
             <div class="FeatureWrapper">
                 <div class="FeatureTitle" id="hook">
                     <h1><i class='iconfont icon-anchor'/><span> START:DASH!!</span></h1>
@@ -104,11 +104,12 @@
     .MainWrapper{
         width:100%;
         max-width: 900px;
-        padding: 0 10px;
+        padding: 8px 25px 15px 25px;
         margin-left: auto;
         margin-right: auto;
-        background-color: rgba(255,255,255,.8);
         animation: main 1s;
+        margin-bottom: 15px;
+
         @keyframes main {
             0% {
                 opacity: 0;
@@ -120,6 +121,8 @@
             }
         }
     }
+
+
     .HomeList{
         width: 100%;
     }
@@ -129,8 +132,6 @@
     }
 
     .more {
-        margin: 50px 0;
-
         .more-btn {
             width: 100px;
             height: 40px;

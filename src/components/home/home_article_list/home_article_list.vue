@@ -8,7 +8,7 @@
         <div class='post-content-wrap'>
             <div class='post-content'>
                 <div class='post-date'>
-                    <i class='iconfont icon-eye'/>
+                    <i class='iconfont icon-biaoqian'/>
                     发布于 {{post.createTime | parseTime}}
                 </div>
 

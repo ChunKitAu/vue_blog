@@ -7,6 +7,7 @@
         <p class="info ellipsis">Tomorrow may be cruel, but, I want see</p>
         <ul class="menu">
             <li class="item flex-items"><router-link to="/"><i class="iconfont icon-fort-awesome"></i> 首页</router-link></li>
+            <li class="item flex-items" > <HeaderSearch></HeaderSearch></li>
             <li ><span class="item flex-items"><i class="iconfont icon-caidan2"></i><span>分类</span></span>
                 <ul class="sub-menu">
                     <li class="item flex-items" v-for="item in category" :key="item.name"><router-link :to="`/category/${item.id}`">{{item.name}}</router-link></li>
@@ -19,8 +20,12 @@
 </template>
 
 <script>
+    import HeaderSearch from "@/components/header_search/header_search";
     export default {
         name: "home_open",
+        components: {
+            HeaderSearch,
+        },
         props:{
             category: {
                 type: Array,
@@ -28,7 +33,7 @@
                     return []
                 }
             }
-        }
+        },
     }
 </script>
 

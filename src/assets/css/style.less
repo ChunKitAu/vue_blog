@@ -40,7 +40,11 @@
 .site-content {
   margin: 0 auto;
   padding: 0 10px;
-  max-width: 800px;
+  max-width: 1000px;
+}
+.my-box-shadow{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;
+  background-color: rgb(251, 251, 251);
 }
 .animate{
   animation: main 1.5s;
@@ -52,7 +56,7 @@
   }
 }
 /**文章样式**/
-.entry-content{
+#blog_content{
 
   /* BLOCKS
   =============================================================================*/
@@ -63,61 +67,52 @@
 
   /* HEADERS
   =============================================================================*/
-  h1,h2,h3,h4,h5,h6 {
-    color: #4f4f4f;
-    margin: 8px 0 16px;
-    font-weight: 700;
-    position: relative;
-    &:hover{
-      &:before {
-        left: -28px;
-        position: absolute;
-        content: '「 ';
-        color: #ff6d6d;
-      }
-      &:after{
-        //position: absolute;
-        content: ' 」';
-        color: #ff6d6d;
-      }
-    }
-    //&:before{
-    //  content: '「 ';
-    //  color: #ff6d6d;
-    //}
-    //&:after{
-    //  content: ' 」';
-    //  color: #ff6d6d;
-    //}
-  }
-
-  h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
-    font-size: inherit;
-  }
   h1 {
-    font-size: 28px;
-    line-height: 36px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #eee;
+    border-radius: 15px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.9em;
   }
   h2 {
-    font-size: 24px;
-    line-height: 32px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #eee;
+    border-radius: 15px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    font-size: 1.7em;
+    width: 70%;
   }
   h3 {
-    font-size: 22px;
-    line-height: 30px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #eee;
+    border-radius: 15px;
+    width: 50%;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    font-size: 1.5em;
   }
   h4 {
-    font-size: 20px;
-    line-height: 28px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #eee;
+    border-radius: 15px;
+    width: 35%;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
   }
-  h5 {
-    font-size: 18px;
-    line-height: 26px;
+  pre {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    line-height: initial;
   }
-  h6 {
-    font-size: 16px;
-    line-height: 24px;
+  a {
+    color: #409EFF;
   }
+
   /* LINKS
   =============================================================================*/
 
@@ -189,43 +184,6 @@
   /* CODE
   =============================================================================*/
 
-  //pre, code, tt {
-  //  font-size: 15px;
-  //  font-family: Consolas, "Liberation Mono", Courier, monospace;
-  //}
-
-  //code, tt {
-  //  margin: 0 5px;
-  //  padding: 2px;
-  //  white-space: nowrap;
-  //  color: #c7254e;
-  //  background-color: #f9f2f4;
-  //  border: 1px solid #eaeaea;
-  //  border-radius: 3px;
-  //}
-  //
-  //pre>code {
-  //  margin: 0;
-  //  padding: 0;
-  //  white-space: pre;
-  //  color: #333;
-  //  border: none;
-  //  background: transparent;
-  //}
-  //
-  //pre {
-  //  background-color: #f8f8f8;
-  //  border: 1px solid #F9F9F9;
-  //  line-height: 1.5rem;
-  //  overflow: auto;
-  //  padding: 6px 10px;
-  //  border-radius: 3px;
-  //}
-  //
-  //pre code, pre tt {
-  //  background-color: transparent;
-  //  border: none;
-  //}
   /* QUOTES
   =============================================================================*/
 
@@ -292,6 +250,17 @@
     color: #4d4d4d;
     font-weight: 400;
     line-height: 26px;
+    code {
+      padding: 1px 6px;
+      color: white;
+      background-color: #a0dad0;
+      border-radius: 5px;
+    }
+    strong {
+      font-size: 18px;
+      font-weight: 600;
+      color: #a0dad0;
+    }
   }
 
   /**

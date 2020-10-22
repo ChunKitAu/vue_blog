@@ -134,8 +134,8 @@
                 opacity: 0;
                 padding-top: 8px;
                 border-top: 1px solid #ddd;
-                -webkit-transform: translate3d(-150px, 0, 0);
-                transform: translate3d(-150px, 0, 0);
+                -webkit-transform: translate3d(-200px, 0, 0);
+                transform: translate3d(-200px, 0, 0);
                 visibility: hidden;
                 transition: .7s all ease;
                 -webkit-transition: .6s all ease;
@@ -150,7 +150,7 @@
 
                 i {
                     margin-top: 3px;
-                    margin-right: 10px;
+                    margin-right: 20px;
                     float: left
                 }
             }
@@ -170,10 +170,10 @@
     }
 
     .post hr {
-        width: 30%;
-        height: 1px;
+        width: 60%;
+        height: 2px;
         margin: 0 auto;
-        border: 0;
+        border: 1px  #ADADAD;
         background: #EFEFEF;
     }
 

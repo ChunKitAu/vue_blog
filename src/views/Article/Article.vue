@@ -17,12 +17,10 @@
         </div>
         <!-- 文章正文-->
         <div class="content">
-            <!-- 目录容器 -->
-            <div class="article-dir-list" id="article-dir"></div>
-            <!--文章-->
-            <div class="article_content">
-                <div id="blog_content"  v-html="blog.content" v-highlight/>
 
+            <!--文章-->
+            <div class="article_content my-box-shadow">
+                <div id="blog_content"  v-html="blog.content" v-highlight/>
                 <!-- todo:赞赏-->
                 <!--声明-->
                 <div class="open-message">
@@ -60,9 +58,10 @@
                     </div>
                     <p v-if="!blog.commentabled" class='text'>此处评论已关闭</p>
                 </div>
-
             </div>
 
+            <!-- 目录容器 -->
+            <div class="article-dir-list" id="article-dir"></div>
         </div>
         </div>
 </template>
@@ -211,7 +210,7 @@
         .single-header {
             max-width: 900px;
             padding: 0 10px;
-            margin-left: auto;
+            margin-left: 15%;
             margin-right: auto;
             text-align: left;
             top: auto;
@@ -277,6 +276,7 @@
             margin: 25px auto;
             //左侧目录
             .article-dir-list {
+                margin-left: 15px;
                 font-size: 14px;
                 display: inline-block;
                 width: 22%;
@@ -285,9 +285,9 @@
                 color: #606266;
                 padding: 15px;
                 height: 500px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
                 overflow-x: hidden;
-                overflow-y: scroll;
+                overflow-y: hidden;
                 &::-webkit-scrollbar {
                     display: none;
                 }
@@ -327,37 +327,27 @@
                     -ms-animation: blink 1.2s linear infinite;
                     -o-animation: blink 1.2s linear infinite;
                 }
+
+                @media (max-width: 800px){
+                    display: none;
+                }
             }
 
-            /*右侧文章内容样式*/
+            /*右侧文章内容样式 具体修改style.less 文件 */
             .article_content {
-                margin-left: 7%;
+                margin-left: 10%;
                 display: inline-block ;
                 vertical-align: top;
                 width: 65%;
                 font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+                padding: 8px 25px 15px 25px;
+                @media (max-width: 800px){
+                    margin-left: 0.1%;
+                    width: 100%;
+                }
+
             }
             #blog_content {
-                blockquote {
-                    color: #666;
-                    border-left: 5px solid black;
-                    background-color: #eef0f4;
-                    padding: 20px;
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                    line-height: initial;
-                }
-                p {
-                    code {
-                        padding: 1px 6px;
-                        color: white;
-                        background-color: #a0dad0;
-                        border-radius: 5px;
-                    }
-                    strong {
-                        font-size: 18px;
-                    }
-                }
                 .hljs {
                     color: #a9b7c6;
                     background: #282c33;
@@ -365,51 +355,6 @@
                     border-radius: 10px;
                     font-size: 15px;
                     font-family: "Source Code Pro", Consolas, Menlo, Monaco, "Courier New", monospace !important;
-                }
-                h1 {
-                    background: rgba(0, 0, 0, 0.6);
-                    color: #eee;
-                    border-radius: 15px;
-                    padding-left: 15px;
-                    margin-bottom: 10px;
-                    text-align: center;
-                    font-size: 1.9em;
-                }
-                h2 {
-                    background: rgba(0, 0, 0, 0.5);
-                    color: #eee;
-                    border-radius: 15px;
-                    padding-left: 15px;
-                    margin-bottom: 10px;
-                    font-size: 1.7em;
-                    width: 70%;
-                }
-                h3 {
-                    background: rgba(0, 0, 0, 0.4);
-                    color: #eee;
-                    border-radius: 15px;
-                    width: 50%;
-                    padding-left: 15px;
-                    margin-bottom: 10px;
-                    font-size: 1.5em;
-                }
-                h4 {
-                    background: rgba(0, 0, 0, 0.3);
-                    color: #eee;
-                    border-radius: 15px;
-                    width: 35%;
-                    padding-left: 15px;
-                    margin-bottom: 10px;
-                    font-size: 1.2em;
-                }
-                pre {
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                    white-space: pre-wrap;
-                    line-height: initial;
-                }
-                a {
-                    color: #409EFF;
                 }
             }
 
@@ -419,7 +364,7 @@
                 position: relative;
                 background: #2B2B2B;
                 padding: 10px 30px;
-                border-radius: 3px;
+                border-radius: 5px;
                 font-size: 14px;
                 color: #fff;
                 &:after {

@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <banner :message="toBannerMessage"></banner>
-        <div class="site-content animate">
+        <div class="site-content animate my-box-shadow">
             <div class="page-header">
                 <h1 class="page-title" v-if="searchValue" >" {{searchValue}} "搜索结果:</h1>
                 <h1 class="page-title" v-else-if="toBannerMessage">" {{toBannerMessage}} "相关文章:</h1>
@@ -216,7 +216,8 @@
     }
 
     .more{
-        margin: 50px 0;
+        margin: 100px 0 10px 0;
+        padding-bottom: 15px;
         .more-btn{
             width: 100px;
             height: 40px;
@@ -225,8 +226,8 @@
             color: #ADADAD;
             border: 1px solid #ADADAD;
             border-radius: 20px;
-            margin: 0 auto;
             cursor: pointer;
+            margin: 0 auto;
             &:hover{
                 color: #8fd0cc;
                 border: 1px dashed #8fd0cc;

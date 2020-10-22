@@ -13,7 +13,6 @@
         </div>
 
         <div class="site-menus">
-<!--            <div class="menu-item header-search"><header-search/></div>-->
             <div class="menu-item header-search" > <HeaderSearch></HeaderSearch></div>
             <div class="menu-item"><router-link to="/"><i class="iconfont icon-fort-awesome"></i> 首页</router-link></div>
             <div class="menu-item hasChild">
