@@ -218,6 +218,7 @@
                 font-weight: 500;
                 font-size: 16px;
                 &:hover {
+                    padding-bottom: 4px;
                     color: rgb(254, 150, 0);
                     border-bottom: solid;
                     border-bottom-width: 4px;

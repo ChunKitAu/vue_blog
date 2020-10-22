@@ -1,7 +1,7 @@
 <template>
     <div class="tagsWrapper">
         <banner :isTags="true"></banner>
-        <div class="mainWrapper">
+        <div class="mainWrapper my-box-shadow">
             <template v-for="item in tags">
                 <tag :tag="item" :key="item.id"></tag>
             </template>
@@ -41,7 +41,7 @@
 
 <style scoped lang="less">
     .mainWrapper{
-        min-height:600px;
+        height: auto;
         max-width: 900px;
         padding: 0 10px;
         margin-left: auto;
